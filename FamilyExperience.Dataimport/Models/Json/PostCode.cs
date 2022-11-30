@@ -1,4 +1,4 @@
-﻿namespace DataMapping.Models.Json
+﻿namespace FamilyExperience.Dataimport.Models.Json
 {
     public class PostCode
     {

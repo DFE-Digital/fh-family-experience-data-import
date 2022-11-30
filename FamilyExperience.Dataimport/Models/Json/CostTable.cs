@@ -1,9 +1,9 @@
-﻿using DataMapping.Converter;
+﻿using FamilyExperience.Dataimport.Converter;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
 
-namespace DataMapping.Models
+namespace FamilyExperience.Dataimport.Models
 {
     public class CostTable
     {

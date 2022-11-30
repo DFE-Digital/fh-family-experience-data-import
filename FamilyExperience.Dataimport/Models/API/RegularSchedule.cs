@@ -1,8 +1,9 @@
-﻿namespace DataMapping.Models.API
+﻿namespace FamilyExperience.Dataimport.Models.API
 {
     public class RegularSchedule
     {
-        public string Id { get; set; }        
+        public string Id { get; set; }   
+        public string ServiceId { get; set; }
         public string Description { get; set; }
         public DateTime? OpensAt { get; set; }
         public DateTime? ClosesAt { get; set; }
@@ -13,6 +14,7 @@
         public string? Interval { get; set; }
         public DateTime?  ValidFrom { get; set; }
         public DateTime? ValidTo { get; set; }
+        public int Weekday { get; set; }
 
 
     }

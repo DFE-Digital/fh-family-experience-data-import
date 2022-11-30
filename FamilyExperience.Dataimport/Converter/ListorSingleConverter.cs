@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Text.Json.Serialization;
 
-namespace DataMapping.Converter
+namespace FamilyExperience.Dataimport.Converter
 {
     public class ListorSingleConverter<T> : Newtonsoft.Json.JsonConverter
     {

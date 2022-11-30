@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapping.Models.API
+namespace FamilyExperience.Dataimport.Models.API
 {
     public class Service
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace DataMapping.Models
+namespace FamilyExperience.Dataimport.Models
 {
     public class DateActivityPeriod
     {

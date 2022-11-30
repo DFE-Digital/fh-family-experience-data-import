@@ -1,15 +1,15 @@
 ﻿using System.Text;
 using AutoMapper;
-using DataMapping.Mapping;
-using DataMapping.Models;
-using DataMapping.Models.API;
+using FamilyExperience.Dataimport.Mapping;
+using FamilyExperience.Dataimport.Models;
+using FamilyExperience.Dataimport.Models.API;
 using Newtonsoft.Json;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralOrganisations;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServices;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OrganisationType;
-using DataMapping.Service;
+using FamilyExperience.Dataimport.Service;
 
-namespace DataMapping
+namespace FamilyExperience.Dataimport
 {
     public class TransformSalfordData
     {
@@ -28,7 +28,7 @@ namespace DataMapping
         
         public async Task ProcessDataAsync()
         {
-            string orgId = "53a99e0d-07b7-46de-9c6a-f45b86f5f0b4";
+            string orgId = "ca8ddaeb-b5e5-46c4-b94d-43a8e2ccc066";
 
 
             try
@@ -37,7 +37,7 @@ namespace DataMapping
                 var mapper = GetMapper();
 
                 var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto() { Name = "Salford City Council", Url = "https://www.salford.gov.uk/", Description = "Salford City Council" };
-                openReferralOrgRecord.Id = Guid.NewGuid().ToString();
+                openReferralOrgRecord.Id = orgId; // Guid.NewGuid().ToString();
                 openReferralOrgRecord.OrganisationType = GetOrganisationType();
 
                 foreach (var service in servicesList.records)
@@ -45,7 +45,7 @@ namespace DataMapping
                     service.OrganisationId = orgId; //openReferralOrgRecord.Id;
                     service.ServiceType = GetServiceType();
                     service.Id = Guid.NewGuid().ToString();
-                    service.LastUpdate = Convert.ToDateTime(service.LastUpdate).ToUniversalTime().ToString();
+                    //service.LastUpdate = Convert.ToDateTime(service.LastUpdate).ToUniversalTime();
                     service.description = service.description.Substring(0, service.description.Length > 500 ? 500 : service.description.Length); // change this 
 
                     // contacts
@@ -82,14 +82,16 @@ namespace DataMapping
                 }
 
                 var openReferralRecord = mapper.Map<List<OpenReferralServiceDto>>(servicesList.records);
-                openReferralOrgRecord.Services = openReferralRecord;  
+                openReferralOrgRecord.Services = openReferralRecord;
 
 
                 //var test = new StringContent(JsonConvert.SerializeObject(openReferralOrgRecord));
+                //new Uri("https://localhost:7022/")  
 
                 _apiClient = new HttpClient
                 {
-                    BaseAddress = new Uri("https://localhost:7022/")
+                    BaseAddress = new Uri("https://s181d01-as-fh-sd-api-dev.azurewebsites.net/")
+
                 };
                 var apiRequest = new HttpRequestMessage() {
                     Method = HttpMethod.Put, 
@@ -254,7 +256,7 @@ namespace DataMapping
            // _client.BaseAddress = new("https://api.openobjects.com/v2/salfordfsd/");
             //Rootobject servicesList = new();
 
-            using var response = await _client.GetAsync(new Uri("https://api.openobjects.com/v2/salfordfsd/records?key=633eb0a9e4b0b3bc6d117a9a&startIndex=70&count=100&query=api_channel:familyhubs"));
+            using var response = await _client.GetAsync(new Uri("https://api.openobjects.com/v2/salfordfsd/records?key=633eb0a9e4b0b3bc6d117a9a&startIndex=3&count=4&query=api_channel:familyhubs"));
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Rootobject>(apiResponse);
 

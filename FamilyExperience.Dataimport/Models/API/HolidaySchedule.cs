@@ -1,4 +1,4 @@
-﻿namespace DataMapping.Models.API
+﻿namespace FamilyExperience.Dataimport.Models.API
 {
     public class HolidaySchedule
     {

@@ -1,7 +1,7 @@
-﻿using DataMapping.Models.Json;
+﻿using FamilyExperience.Dataimport.Models.Json;
 using System.Text.Json;
 
-namespace DataMapping.Service
+namespace FamilyExperience.Dataimport.Service
 {
     public class PostcodeLocationService
     {

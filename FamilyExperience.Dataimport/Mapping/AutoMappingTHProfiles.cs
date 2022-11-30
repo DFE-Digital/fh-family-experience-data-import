@@ -12,19 +12,20 @@ using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralCostOptions;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralRegularSchedule;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralHolidaySchedule;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.ServiceType;
-
+using FamilyExperienced.Dataimport.Models.Json;
 
 namespace FamilyExperience.Dataimport.Mapping
 {
-    public class AutoMappingProfiles : Profile
+    public class AutoMappingTHProfiles:Profile
     {
-        public AutoMappingProfiles()
+        public AutoMappingTHProfiles()
         {
             CreateMap<ContactNumbers, OpenReferralPhoneDto>();
-                
+            CreateMap<ContactNumbers, OpenReferralPhoneDto>();
+
 
             CreateMap<ContactDetails, OpenReferralContactDto>()
-                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))                
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                .ForMember(d => d.Phones, opts => opts.MapFrom(s => s.Numbers));
 
@@ -38,7 +39,13 @@ namespace FamilyExperience.Dataimport.Mapping
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.Physical_addresses, opts => opts.MapFrom(s => s.PhysicalAddresses));
 
-            CreateMap<RegularSchedule, OpenReferralRegularScheduleDto>();
+            CreateMap<RegularSchedule, OpenReferralRegularScheduleDto>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.Byday, opts => opts.MapFrom(s => s.Byday))
+                .ForMember(d => d.Opens_at, opts => opts.MapFrom(s => s.OpensAt))
+                .ForMember(d => d.Closes_at, opts => opts.MapFrom(s => s.ClosesAt));
+
+
 
             CreateMap<HolidaySchedule, OpenReferralHolidayScheduleDto>();
 
@@ -52,19 +59,20 @@ namespace FamilyExperience.Dataimport.Mapping
 
             CreateMap<ServiceType, ServiceTypeDto>();
 
-            CreateMap<Record, OpenReferralServiceDto>()
-              .ForMember(d => d.Description, opts => opts.MapFrom(s => s.description))
+            CreateMap<THService, OpenReferralServiceDto>()
+              .ForMember(d => d.Description, opts => opts.MapFrom(s => s.ServiceDescription))
               .ForMember(d => d.OpenReferralOrganisationId, opts => opts.MapFrom(s => s.OrganisationId))
-              .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Title))
-              .ForMember(d => d.Email, opts => opts.MapFrom(s => s.Email))              
+              .ForMember(d => d.Name, opts => opts.MapFrom(s => s.ServiceName))
+              .ForMember(d => d.Email, opts => opts.MapFrom(s => s.Email))
               .ForMember(d => d.Contacts, opts => opts.MapFrom(s => s.ContactDetails))
-              .ForMember(d => d.Url, opts => opts.MapFrom(s => s.Website.FirstOrDefault().url))
+              .ForMember(d => d.Url, opts => opts.MapFrom(s => s.Url))
               .ForMember(d => d.Cost_options, opts => opts.MapFrom(s => s.CostOptions))
               .ForMember(d => d.Service_at_locations, opts => opts.MapFrom(s => s.ServiceAtLocations))
               .ForMember(d => d.CanFamilyChooseDeliveryLocation, opts => opts.MapFrom(s => s.CanFamilyChooseDeliveryLocation));
 
-            CreateMap<Rootobject, OpenReferralOrganisationWithServicesDto>()
-              .ForMember(d => d.Services, opts => opts.MapFrom(s => s.records));
+            CreateMap<THRoot, OpenReferralOrganisationWithServicesDto>()
+              .ForMember(d => d.Services, opts => opts.MapFrom(s => s.services));
+
 
         }
     }

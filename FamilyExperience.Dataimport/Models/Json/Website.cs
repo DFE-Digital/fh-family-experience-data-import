@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapping.Models
+namespace FamilyExperience.Dataimport.Models
 {
     public class Website
     {

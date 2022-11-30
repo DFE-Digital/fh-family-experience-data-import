@@ -1,17 +1,17 @@
 ﻿
 
-namespace DataMapping
+namespace FamilyExperience.Dataimport
 {
     class Program
     {
 
         static  void Main()
         {
-           // TransformSalfordData transformData = new TransformSalfordData();
-           //transformData.ProcessDataAsync().Wait();
+            //TransformSalfordData transformData = new TransformSalfordData();
+            //transformData.ProcessDataAsync().Wait();
 
             TransformTHData transformTHData = new TransformTHData();
-            transformTHData.ProcessDataAsync();
+            transformTHData.ProcessDataAsync().Wait();
         }
            
     }
