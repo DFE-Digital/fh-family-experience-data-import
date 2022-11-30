@@ -41,7 +41,8 @@ namespace FamilyExperienced.Dataimport.Models.Json
         [JsonProperty("provider_mobile")]
         public string Mobile { get; set; }
 
-
+        [JsonProperty("provtype_desc")]
+        public string Category { get; set; }
 
         [JsonProperty("provider_web_site")]
         public string Url { get; set; }
@@ -95,11 +96,14 @@ namespace FamilyExperienced.Dataimport.Models.Json
 
         public List<CostOption> CostOptions { get; set; }
 
-        public List<ServiceAtLocation> ServiceAtLocations { get; set; }       
+        public List<ServiceAtLocation> ServiceAtLocations { get; set; }
+
+        public List<ServiceTaxonomy> ServiceTaxonomies { get; set; }
 
         public ServiceType ServiceType { get; set; }
 
         public bool CanFamilyChooseDeliveryLocation { get; set; } = false;
+       
 
 
     }
