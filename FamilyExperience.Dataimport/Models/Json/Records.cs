@@ -89,8 +89,7 @@ namespace FamilyExperience.Dataimport.Models
 
         [JsonProperty("date_session_info")]
         [JsonConverter(typeof(ListorSingleConverter<string>))]
-        public List<string> DatesessionInfo { get; set; }
-        public Logo logo { get; set; }
+        public List<string> DatesessionInfo { get; set; }      
         public Images images { get; set; }
         public object files { get; set; }
 

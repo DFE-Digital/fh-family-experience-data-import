@@ -89,6 +89,7 @@ namespace FamilyExperience.Dataimport
                              Cost_options = GetCostOptions(service),
                              Service_at_locations = GetServiceAtLocations(service)
                              
+                             
                          });
                     openReferralOrgRecord.AdministractiveDistrictCode = GetLongitudeLatitudeForPostcode(service.Postcode).AdministractiveDistrictCode;
 
@@ -165,7 +166,7 @@ namespace FamilyExperience.Dataimport
             foreach (var serviceSchedule in serviceSchedules)
             {
                 schedules.Add(new OpenReferralRegularScheduleDto(Guid.NewGuid().ToString(),
-                    description: null,
+                    description: serviceSchedule.AvailableDay,
                     opens_at: DateTime.ParseExact(serviceSchedule.StartTime, "h:mm tt", CultureInfo.InvariantCulture).ToUniversalTime(),
                     closes_at: DateTime.ParseExact(serviceSchedule.EndTime, "h:mm tt", CultureInfo.InvariantCulture).ToUniversalTime(),
                     byday: serviceSchedule.AvailableDay,
@@ -308,6 +309,7 @@ namespace FamilyExperience.Dataimport
             List<OpenReferralPhysicalAddressDto> PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
 
             //CheckIfLocationExists(service.Postcode);
+
 
             PhysicalAddresses.Add(new OpenReferralPhysicalAddressDto()
             {

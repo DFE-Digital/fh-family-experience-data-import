@@ -27,11 +27,14 @@ namespace FamilyExperience.Dataimport.Helper
                 var startRow = 2;                
                 for (int rowNum = startRow; rowNum <= workSheetDetails.Dimension.End.Row; rowNum++)
                 {
-                    var wsRow = workSheetDetails.Cells[rowNum, 1, rowNum, excelasTable.Columns.Count];
+                    var wsRow = workSheetDetails.Cells[rowNum, 2, rowNum, excelasTable.Columns.Count];
                     DataRow row = excelasTable.Rows.Add();
+                    int count = 0;
                     foreach (var cell in wsRow)
                     {
-                        row[cell.Start.Column - 1] = cell.Text;
+                        
+                        row[cell.Start.Column-1] = cell.Text;
+                       
                     }
                 }
 
