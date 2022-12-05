@@ -43,8 +43,8 @@ namespace FamilyExperience.Dataimport
             masterTaxonomies = new List<OpenReferralTaxonomyDto>();
             _apiClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:7022/")
-               // BaseAddress = new Uri("https://s181d01-as-fh-sd-api-dev.azurewebsites.net/")
+               // BaseAddress = new Uri("https://localhost:7022/")
+                BaseAddress = new Uri("https://s181d01-as-fh-sd-api-dev.azurewebsites.net/")
             };
            
         }
@@ -61,7 +61,7 @@ namespace FamilyExperience.Dataimport
 
                 var path = HttpUtility.HtmlEncode("https://educationgovuk-my.sharepoint.com/:x:/r/personal/ben_macinnes_education_gov_uk/Documents/Documents/Local%20Authority%20Data%20Capture.xlsm?d=waa7a87fc5c354244ba52d29178afebb4&csf=1&web=1&e=9hs4DI");
 
-                var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\Local Authority Data Capture_Latest.xlsx");
+                var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\Local Authority Data Capture v3.0.xlsm");
                 var services = JsonConvert.DeserializeObject<List<StandardData>>(mainTHServices);
                 services = services.Where(k => k.OrganisationName != "").ToList();
 
@@ -70,7 +70,7 @@ namespace FamilyExperience.Dataimport
                 //openReferralOrgRecord.OrganisationType = GetOrganisationType();
                 //openReferralOrgRecord.Services = new List<OpenReferralServiceDto>();
 
-                var orgs = services.Where(k => k.OrganisationName != "").ToList();
+                var orgs = services.Where(k => k.OrganisationName is not null).ToList();
                 var Services = new List<OpenReferralServiceDto>();
 
 
@@ -193,7 +193,7 @@ namespace FamilyExperience.Dataimport
                 Deliverable_type = orgService.DeliveryMethod,
                 Status = "active",
                 OpenReferralOrganisationId = orgid,
-                ServiceType = GetServiceType(orgService.LAName),
+                ServiceType = GetServiceType(orgService.OrgType),
                 Contacts = GetContactDetails(orgService),
                 Cost_options = GetCostOptions(orgService),
                 Eligibilities = GetEligibilities(orgService),
@@ -263,12 +263,12 @@ namespace FamilyExperience.Dataimport
         {
             switch(type)
             {
-                case "Local Authority Service": return new OrganisationTypeDto("1", "LA", "Local Authority"); 
-                case "Voluntary, Charitable, Faith Sector": return
+                case "Local Authority": return new OrganisationTypeDto("1", "LA", "Local Authority"); 
+                case "Voluntary and Community Sector": return
                     new OrganisationTypeDto("2", "VCFS", "Voluntary, Charitable, Faith Sector"); 
             case "Public / Private Company eg: Child Care":
                     return new OrganisationTypeDto("3", "Company", "Public / Private Company eg: Child Care Centre");
-                case "FamilyHub":
+                case "Family Hub":
                     return new OrganisationTypeDto("4", "FamilyHub", "Family Hubs");
             }
             return null;
@@ -278,7 +278,7 @@ namespace FamilyExperience.Dataimport
         private ServiceTypeDto GetServiceType(string type)
         {
             // return new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience");
-            return type == "Local Authority " ? new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience")
+            return (type == "Local Authority" || type== "Family Hub")  ? new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience")
             : new ServiceTypeDto(id: "1", name: "IS", description: "Information Sharing");
         }
 
@@ -354,8 +354,8 @@ namespace FamilyExperience.Dataimport
             if (string.IsNullOrEmpty(service.MinAge) && string.IsNullOrEmpty(service.MaxAge)) return null;
 
 
-            service.MinAge = service.MinAge.IndexOf("years")>0 ? service.MinAge.Substring(0,service.MinAge.IndexOf("years")) : service.MinAge.Substring(0, service.MinAge.IndexOf("year"));
-            service.MaxAge = service.MaxAge.IndexOf("years") > 0 ? service.MaxAge.Substring(0, service.MaxAge.IndexOf("years")) : service.MaxAge.Substring(0, service.MaxAge.IndexOf("year"));
+           // service.MinAge = service.MinAge //service.MinAge.IndexOf("years")>0 ? service.MinAge.Substring(0,service.MinAge.IndexOf("years")) : service.MinAge.Substring(0, service.MinAge.IndexOf("year"));
+            //service.MaxAge = //service.MaxAge.IndexOf("years") > 0 ? service.MaxAge.Substring(0, service.MaxAge.IndexOf("years")) : service.MaxAge.Substring(0, service.MaxAge.IndexOf("year"));
 
             var eligibilities = new List<OpenReferralEligibilityDto>();
             eligibilities.Add(new OpenReferralEligibilityDto(id: Guid.NewGuid().ToString(), eligibility: "child",

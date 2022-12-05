@@ -24,7 +24,7 @@ namespace FamilyExperience.Dataimport.Helper
                         excelasTable.Columns.Add(true ? firstRowCell.Text : firstColumn);
                     }
                 }
-                var startRow = 2;                
+                var startRow = 4;                
                 for (int rowNum = startRow; rowNum <= workSheetDetails.Dimension.End.Row; rowNum++)
                 {
                     var wsRow = workSheetDetails.Cells[rowNum, 2, rowNum, excelasTable.Columns.Count];
@@ -33,7 +33,7 @@ namespace FamilyExperience.Dataimport.Helper
                     foreach (var cell in wsRow)
                     {
                         
-                        row[cell.Start.Column-1] = cell.Text;
+                        row[cell.Start.Column-2] = cell.Text;
                        
                     }
                 }
