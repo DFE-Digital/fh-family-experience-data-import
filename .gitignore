@@ -1,7 +1,0 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/.vs/fh-family-experience-data-import
-/FamilyExperience.Dataimport/bin/Debug/net6.0
-/FamilyExperience.Dataimport/obj
