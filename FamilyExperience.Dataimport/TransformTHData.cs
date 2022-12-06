@@ -47,7 +47,7 @@ namespace FamilyExperience.Dataimport
             try
             {
                 var orgid = "4faa3eb4-709b-4731-a5ed-dafaa6bf93c5";
-               // var mapper = GetMapper();
+                // var mapper = GetMapper();
                 var ThRoot = new THRoot();
 
                 var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\TH\AP_MainSet.xlsx");
@@ -63,31 +63,37 @@ namespace FamilyExperience.Dataimport
 
                 var test = ThRoot.services.Take(3);
 
-                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto() { Name = "Tower Hamlets council", Url = "https://www.towerhamlets.gov.uk/", Description = "Tower Hamlets council" };
-                openReferralOrgRecord.Id = orgid;//Guid.NewGuid().ToString();
+                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto()
+                {
+                    Name = "Tower Hamlets council",
+                    Url = "https://www.towerhamlets.gov.uk/",
+                    Description = "Tower Hamlets council"
+                };
+                openReferralOrgRecord.Id = orgid; //Guid.NewGuid().ToString();
                 openReferralOrgRecord.OrganisationType = GetOrganisationType();
                 openReferralOrgRecord.Services = new List<OpenReferralServiceDto>();
 
                 foreach (var service in test)
                 {
                     openReferralOrgRecord.Services.Add(
-                         new OpenReferralServiceDto()
-                         {
-                             Id = Guid.NewGuid().ToString(),
-                             Name = service.ServiceName,
-                             Url = service.Url,
-                             Description = service.ServiceDescription,
-                             Email = service.Email,
-                             CanFamilyChooseDeliveryLocation = false,
-                             OpenReferralOrganisationId = openReferralOrgRecord.Id,
-                             ServiceType = GetServiceType(),
-                             Contacts = GetContactDetails(service),
-                             Cost_options = GetCostOptions(service),
-                             Service_at_locations = GetServiceAtLocations(service)
-                             
-                             
-                         });
-                    openReferralOrgRecord.AdministractiveDistrictCode = GetLongitudeLatitudeForPostcode(service.Postcode).AdministractiveDistrictCode;
+                        new OpenReferralServiceDto()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Name = service.ServiceName,
+                            Url = service.Url,
+                            Description = service.ServiceDescription,
+                            Email = service.Email,
+                            CanFamilyChooseDeliveryLocation = false,
+                            OpenReferralOrganisationId = openReferralOrgRecord.Id,
+                            ServiceType = GetServiceType(),
+                            Contacts = GetContactDetails(service),
+                            Cost_options = GetCostOptions(service),
+                            Service_at_locations = GetServiceAtLocations(service)
+
+
+                        });
+                    openReferralOrgRecord.AdministractiveDistrictCode =
+                        GetLongitudeLatitudeForPostcode(service.Postcode).AdministractiveDistrictCode;
 
                     //service.OrganisationId = openReferralOrgRecord.Id;
                     //service.ServiceType = GetServiceType();
@@ -123,19 +129,22 @@ namespace FamilyExperience.Dataimport
                     Method = HttpMethod.Put,
                     RequestUri = new Uri(_apiClient.BaseAddress + $"api/organizations/{orgid}"),
                     Content = new StringContent(JsonConvert.SerializeObject(openReferralOrgRecord),
-                    Encoding.UTF8, "application/json")
+                        Encoding.UTF8, "application/json")
                 };
                 using var isapiResponse = await _apiClient.SendAsync(apiRequest);
 
                 Console.WriteLine(isapiResponse.StatusCode);
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private static async Task<List<Taxonomy>> GetMasterTaxonomy()
         {
-           var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/taxonomies"));
+            var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/taxonomies"));
             var apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Taxonomy>>(apiResponse);
         }
@@ -144,7 +153,7 @@ namespace FamilyExperience.Dataimport
         {
 
             var DfeCategory = categoriesList.Where(k => k.Category == service.Category).First();
-            var cat = masterTaxonomies.Where(s=>s.Name == DfeCategory.SubCategory).First();
+            var cat = masterTaxonomies.Where(s => s.Name == DfeCategory.SubCategory).First();
 
             var categories = new List<ServiceTaxonomy>();
             categories.Add(new ServiceTaxonomy()
@@ -185,12 +194,12 @@ namespace FamilyExperience.Dataimport
             {
                 Id = Guid.NewGuid().ToString(),
                 Location = GetLocations(service),
-               Regular_schedule = GetSchedules(service)
+                Regular_schedule = GetSchedules(service)
             });
             return serviceAtLocations;
         }
 
-        
+
         private OpenReferralLocationDto GetLocations(THService service)
         {
             var longlatDetails = GetLongitudeLatitudeForPostcode(service.Postcode);
@@ -203,8 +212,8 @@ namespace FamilyExperience.Dataimport
                 Longitude = longlatDetails.Longitude,
                 Physical_addresses = GetPhysicalAddress(service)
 
-            };           
-            
+            };
+
         }
 
 
@@ -215,7 +224,7 @@ namespace FamilyExperience.Dataimport
             {
                 Id = Guid.NewGuid().ToString(),
                 // Maximum_age = service.MaximumAge,
-              //   Minimum_age =  service.MinimumAge
+                //   Minimum_age =  service.MinimumAge
 
             });
 
@@ -255,7 +264,7 @@ namespace FamilyExperience.Dataimport
             longitudeLatitude.AdministractiveDistrictCode = result.result.codes.admin_district;
             longitudeLatitudes.Add(longitudeLatitude);
             return longitudeLatitude;
-        }      
+        }
 
 
         private List<OpenReferralCostOptionDto> GetCostOptions(THService service)
@@ -286,7 +295,7 @@ namespace FamilyExperience.Dataimport
                 Amount_description = option
             };
         }
-         
+
         private List<OpenReferralContactDto> GetContactDetails(THService service)
         {
             var ContactDetails = new List<OpenReferralContactDto>();
@@ -298,7 +307,7 @@ namespace FamilyExperience.Dataimport
             }); ;
 
             return ContactDetails;
-        }     
+        }
 
         private List<OpenReferralPhysicalAddressDto> GetPhysicalAddress(THService service)
         {
