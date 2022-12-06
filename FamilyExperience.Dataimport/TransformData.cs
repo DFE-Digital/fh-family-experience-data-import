@@ -27,12 +27,12 @@ namespace FamilyExperience.Dataimport
 {
     public class TransformData
     {
-        protected LongitudeLatitudeFinder _longitudeLatitudeFinder;
-        protected PostcodeLocationService _postcodeLocationService;
+        private LongitudeLatitudeFinder _longitudeLatitudeFinder;
+        private PostcodeLocationService _postcodeLocationService;
         private List<OpenReferralTaxonomyDto> masterTaxonomies;
         private List<OpenReferralOrganisationDto> _masterOrgs;
         private OpenReferralOrganisationWithServicesDto _openReferralOrganisationWithServicesDtos;
-        protected static HttpClient? _apiClient;
+        private static HttpClient? _apiClient;
         protected readonly string FamilyHub = "Family Hub";
         public TransformData()
         {
@@ -280,7 +280,7 @@ namespace FamilyExperience.Dataimport
             : new ServiceTypeDto(id: "1", name: "IS", description: "Information Sharing");
         }
 
-        public List<OpenReferralPhoneDto> GetContactNumbers(StandardData service)
+        private List<OpenReferralPhoneDto> GetContactNumbers(StandardData service)
         {
             List<OpenReferralPhoneDto> contactNumbers = new();
 
@@ -426,19 +426,19 @@ namespace FamilyExperience.Dataimport
 
         }
 
-        public async Task<List<OpenReferralOrganisationDto>> GetOrganisations()
+        private async Task<List<OpenReferralOrganisationDto>> GetOrganisations()
         { 
             using var response = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/organizations"));
             var apiResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<OpenReferralOrganisationDto>>(apiResponse);
         }
 
-        public OpenReferralOrganisationDto GetOrganisationInfo(string organisationName)
+        private OpenReferralOrganisationDto GetOrganisationInfo(string organisationName)
         {         
             return _masterOrgs.Where(k=>k.Name==organisationName).FirstOrDefault();
         }
 
-        public async Task<OpenReferralOrganisationWithServicesDto> GetServicesForOrganisation(string organisationId)
+        private async Task<OpenReferralOrganisationWithServicesDto> GetServicesForOrganisation(string organisationId)
         {
             using var response = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/organizations/{organisationId}"));
             var apiResponse = await response.Content.ReadAsStringAsync();

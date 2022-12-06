@@ -13,9 +13,9 @@ namespace FamilyExperience.Dataimport
 {
     public class TransformSalfordData
     {
-        protected static HttpClient _client;
-        protected static HttpClient? _apiClient;
-        protected PostcodeLocationService _postcodeLocationService;
+        private static HttpClient _client;
+        private static HttpClient? _apiClient;
+        private PostcodeLocationService _postcodeLocationService;
         private List<LongitudeLatitude> longitudeLatitudes;
         private Rootobject servicesList { get;set;}
 
@@ -164,7 +164,7 @@ namespace FamilyExperience.Dataimport
             return location;
         }
 
-        public LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode)
+        private LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode)
         {
             var longitudeLatitude = new LongitudeLatitude();
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)
@@ -239,7 +239,7 @@ namespace FamilyExperience.Dataimport
             return new OrganisationTypeDto("1", "LA", "Local Authority");
         }
 
-        public List<ContactNumbers> GetContactNumbers(List<string> contactPhoneNumbers)
+        private List<ContactNumbers> GetContactNumbers(List<string> contactPhoneNumbers)
         {
             List<ContactNumbers> contactNumbers = new();
             foreach (var contactNumber in contactPhoneNumbers ?? new List<string>())
@@ -250,7 +250,7 @@ namespace FamilyExperience.Dataimport
             return contactNumbers;
         }
 
-        public static async Task<Rootobject> GetSalfordDataAsync()
+        private static async Task<Rootobject> GetSalfordDataAsync()
         {
             _client = new();
            // _client.BaseAddress = new("https://api.openobjects.com/v2/salfordfsd/");

@@ -24,8 +24,8 @@ namespace FamilyExperience.Dataimport
     public class TransformTHData
     {
         protected static HttpClient _client;
-        protected static HttpClient? _apiClient;
-        protected PostcodeLocationService _postcodeLocationService;
+        private static HttpClient? _apiClient;
+        private PostcodeLocationService _postcodeLocationService;
         private List<LongitudeLatitude> longitudeLatitudes;
         private List<THAvailability> tHAvailabilities;
         private List<Categories> categoriesList;
@@ -231,7 +231,7 @@ namespace FamilyExperience.Dataimport
         }
 
 
-        public LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode)
+        private LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode)
         {
             var longitudeLatitude = new LongitudeLatitude();
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)
@@ -327,7 +327,7 @@ namespace FamilyExperience.Dataimport
             return new OrganisationTypeDto("1", "LA", "Local Authority");
         }
 
-        public List<OpenReferralPhoneDto> GetContactNumbers(THService service)
+        private List<OpenReferralPhoneDto> GetContactNumbers(THService service)
         {
             List<OpenReferralPhoneDto> contactNumbers = new();
 
