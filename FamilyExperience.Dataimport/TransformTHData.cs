@@ -215,29 +215,6 @@ namespace FamilyExperience.Dataimport
 
         }
 
-
-        private List<OpenReferralEligibilityDto> GetEligibilities(THService service)
-        {
-            var eligibilities = new List<OpenReferralEligibilityDto>();
-            eligibilities.Add(new OpenReferralEligibilityDto
-            {
-                Id = Guid.NewGuid().ToString(),
-                // Maximum_age = service.MaximumAge,
-                //   Minimum_age =  service.MinimumAge
-
-            });
-
-            return eligibilities;
-
-        }
-
-
-        private void GetAge(string age)
-        {
-            // var t = age.Split()
-        }
-
-
         private LongitudeLatitude GetLongitudeLatitudeForPostcode(string postcode)
         {
             var longitudeLatitude = new LongitudeLatitude();

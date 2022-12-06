@@ -51,7 +51,6 @@ namespace FamilyExperience.Dataimport
         {
             try
             {
-                string orgid;
                 masterTaxonomies = await GetMasterTaxonomy();
                 _masterOrgs = await GetOrganisations();
 
@@ -192,7 +191,7 @@ namespace FamilyExperience.Dataimport
                 Eligibilities = GetEligibilities(orgService),
                 Service_at_locations = GetServiceAtLocations(orgService),
                 Service_taxonomys = GetCategories(orgService),
-                ServiceDelivery = string.IsNullOrEmpty(orgService.DeliveryMethod) ? null : GetServiceDeliveries(orgService),
+                ServiceDelivery = string.IsNullOrEmpty(orgService.DeliveryMethod) ? null : GetServiceDeliveries(),
                 Languages = string.IsNullOrEmpty(orgService.Language) ? null : GetLanguages(orgService)
 
             };
@@ -221,14 +220,13 @@ namespace FamilyExperience.Dataimport
             return categories;
         }
 
-        private List<OpenReferralServiceDeliveryExDto> GetServiceDeliveries(StandardData service)
+        private List<OpenReferralServiceDeliveryExDto> GetServiceDeliveries()
         {
             Enum.TryParse("Active", out ServiceDelivery serviceDevliveryType);
             var serviceDeliveries = new List<OpenReferralServiceDeliveryExDto>();
             serviceDeliveries.Add(new OpenReferralServiceDeliveryExDto(id:Guid.NewGuid().ToString(), serviceDelivery : serviceDevliveryType));
 
             return serviceDeliveries;
-
         }
 
         private List<OpenReferralLanguageDto> GetLanguages(StandardData service)
