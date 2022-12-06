@@ -228,8 +228,7 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralServiceDeliveryExDto> GetServiceDeliveries(StandardData service)
         {
-            ServiceDelivery serviceDevliveryType;
-            Enum.TryParse("Active", out serviceDevliveryType);
+            Enum.TryParse("Active", out ServiceDelivery serviceDevliveryType);
             var serviceDeliveries = new List<OpenReferralServiceDeliveryExDto>();
             serviceDeliveries.Add(new OpenReferralServiceDeliveryExDto(id:Guid.NewGuid().ToString(), serviceDelivery : serviceDevliveryType));
 
@@ -319,11 +318,10 @@ namespace FamilyExperience.Dataimport
         private OpenReferralCostOptionDto GetCost(string providercost, string option)
         {
             providercost = providercost.Contains('£') ? providercost.Remove(0,1) : providercost;
-            decimal costDecimal;
             return new OpenReferralCostOptionDto()
             {
                 Id = Guid.NewGuid().ToString(),
-                Amount = (decimal.TryParse(providercost, out costDecimal) ? costDecimal : 0),
+                Amount = (decimal.TryParse(providercost, out var costDecimal) ? costDecimal : 0),
                 Amount_description = option
             };
         }

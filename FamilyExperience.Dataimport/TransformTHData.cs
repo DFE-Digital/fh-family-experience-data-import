@@ -287,11 +287,10 @@ namespace FamilyExperience.Dataimport
 
         private OpenReferralCostOptionDto GetCost(string providercost, string option)
         {
-            decimal costDecimal;
             return new OpenReferralCostOptionDto()
             {
                 Id = Guid.NewGuid().ToString(),
-                Amount = decimal.TryParse(providercost, out costDecimal) ? costDecimal : 0,
+                Amount = decimal.TryParse(providercost, out var costDecimal) ? costDecimal : 0,
                 Amount_description = option
             };
         }

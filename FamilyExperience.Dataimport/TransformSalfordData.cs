@@ -203,12 +203,10 @@ namespace FamilyExperience.Dataimport
             var CostOptions = new List<CostOption>(); 
             foreach (var cost in service.CostOption ?? new List<CostTable>())
             {
-                decimal costDecimal;
-                
                 CostOptions.Add(new CostOption()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Amount = decimal.TryParse(cost.CostAmount, out costDecimal) ? costDecimal : 0,
+                    Amount = decimal.TryParse(cost.CostAmount, out var costDecimal) ? costDecimal : 0,
                     Amount_description = cost.CostType is null ? string.Empty : cost.CostType.Displayname.ToString()
                 });
             }
