@@ -1,4 +1,4 @@
-﻿namespace FamilyExperience.Dataimport.Models
+﻿namespace FamilyExperience.Dataimport.Models.Json
 {
     public class Website
     {

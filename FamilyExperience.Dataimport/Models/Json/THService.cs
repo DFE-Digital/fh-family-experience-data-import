@@ -1,8 +1,7 @@
-﻿using FamilyExperience.Dataimport.Models;
-using FamilyExperience.Dataimport.Models.API;
+﻿using FamilyExperience.Dataimport.Models.API;
 using Newtonsoft.Json;
 
-namespace FamilyExperienced.Dataimport.Models.Json
+namespace FamilyExperience.Dataimport.Models.Json
 {
     public class THRoot
     {

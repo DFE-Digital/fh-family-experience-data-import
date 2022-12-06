@@ -3,6 +3,7 @@ using AutoMapper;
 using FamilyExperience.Dataimport.Mapping;
 using FamilyExperience.Dataimport.Models;
 using FamilyExperience.Dataimport.Models.API;
+using FamilyExperience.Dataimport.Models.Json;
 using Newtonsoft.Json;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralOrganisations;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServices;

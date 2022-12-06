@@ -1,6 +1,6 @@
 ﻿using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralTaxonomys;
 
-namespace FamilyExperience.Dataimport.Models
+namespace FamilyExperience.Dataimport.Models.Json
 {
   
 

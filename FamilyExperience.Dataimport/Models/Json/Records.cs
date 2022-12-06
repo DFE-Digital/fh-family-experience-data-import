@@ -1,8 +1,8 @@
 ﻿using FamilyExperience.Dataimport.Converter;
-using Newtonsoft.Json;
 using FamilyExperience.Dataimport.Models.API;
+using Newtonsoft.Json;
 
-namespace FamilyExperience.Dataimport.Models
+namespace FamilyExperience.Dataimport.Models.Json
 {
 
     public class Rootobject

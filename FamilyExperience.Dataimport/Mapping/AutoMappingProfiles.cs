@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FamilyExperience.Dataimport.Models;
 using FamilyExperience.Dataimport.Models.API;
+using FamilyExperience.Dataimport.Models.Json;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralContacts;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServiceAtLocations;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralLocations;
