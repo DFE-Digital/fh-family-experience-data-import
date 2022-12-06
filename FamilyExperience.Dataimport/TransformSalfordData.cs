@@ -170,14 +170,14 @@ namespace FamilyExperience.Dataimport
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)
             {
                 var details = longitudeLatitudes.Where(x => x.Postcode == postcode).ToList();
-                return details.Count >= 1 ? longitudeLatitude = details.FirstOrDefault() :
-                   PostCodeLookUp(postcode, longitudeLatitude);
+                return details.Count >= 1 ? details.FirstOrDefault() : PostCodeLookUp(postcode, longitudeLatitude);
 
             }
-            else { return PostCodeLookUp(postcode, longitudeLatitude); }
-            
-
-    }
+            else
+            {
+                return PostCodeLookUp(postcode, longitudeLatitude);
+            }
+        }
 
         private LongitudeLatitude PostCodeLookUp(string postcode, LongitudeLatitude longitudeLatitude)
         {

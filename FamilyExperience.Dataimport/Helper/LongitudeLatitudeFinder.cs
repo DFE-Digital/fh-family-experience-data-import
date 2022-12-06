@@ -11,13 +11,12 @@ namespace FamilyExperience.Dataimport.Helper
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)
             {
                 var details = longitudeLatitudes.Where(x => x.Postcode == postcode).ToList();
-                return details.Count >= 1 ? longitudeLatitude = details.FirstOrDefault() :
-                   PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService);
-
+                return details.Count >= 1 ? details.FirstOrDefault() : PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService);
             }
-            else { return PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService); }
-
-
+            else
+            {
+                return PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService);
+            }
         }
 
         private LongitudeLatitude PostCodeLookUp(string postcode, LongitudeLatitude longitudeLatitude, PostcodeLocationService _postcodeLocationService)
