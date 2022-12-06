@@ -208,7 +208,7 @@ namespace FamilyExperience.Dataimport
             var categories = new List<OpenReferralServiceTaxonomyDto>();
             if (string.IsNullOrEmpty(service.Category))
             {
-                var taxonomy = masterTaxonomies.Where(s => s.Name == service.Category).First();
+                var taxonomy = masterTaxonomies.First(s => s.Name == service.Category);
                 categories.Add(new OpenReferralServiceTaxonomyDto(
                     Guid.NewGuid().ToString(), taxonomy));
             }

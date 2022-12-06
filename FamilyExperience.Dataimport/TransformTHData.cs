@@ -151,8 +151,8 @@ namespace FamilyExperience.Dataimport
         private List<ServiceTaxonomy> GetCategories(THService service)
         {
 
-            var DfeCategory = categoriesList.Where(k => k.Category == service.Category).First();
-            var cat = masterTaxonomies.Where(s => s.Name == DfeCategory.SubCategory).First();
+            var DfeCategory = categoriesList.First(k => k.Category == service.Category);
+            var cat = masterTaxonomies.First(s => s.Name == DfeCategory.SubCategory);
 
             var categories = new List<ServiceTaxonomy>();
             categories.Add(new ServiceTaxonomy
