@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyExperience.Dataimport", "FamilyExperience.Dataimport\FamilyExperience.Dataimport.csproj", "{25DFB7D4-1239-4A14-82AF-DCD6BF2DD2C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyExperience.DataImport", "FamilyExperience.DataImport\FamilyExperience.DataImport.csproj", "{25DFB7D4-1239-4A14-82AF-DCD6BF2DD2C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

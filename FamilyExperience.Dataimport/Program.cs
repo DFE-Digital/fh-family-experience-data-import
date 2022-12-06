@@ -1,6 +1,6 @@
-﻿using FamilyExperience.Dataimport.Service;
+﻿using FamilyExperience.DataImport.Service;
 
-namespace FamilyExperience.Dataimport
+namespace FamilyExperience.DataImport
 {
     public class Program
     {

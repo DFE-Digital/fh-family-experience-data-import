@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FamilyExperience.Dataimport.Models
+namespace FamilyExperience.DataImport.Models
 {
     public class StandardData
     {

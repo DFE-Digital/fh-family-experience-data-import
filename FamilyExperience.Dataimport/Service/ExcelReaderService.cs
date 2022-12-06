@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using OfficeOpenXml;
 
-namespace FamilyExperience.Dataimport.Service
+namespace FamilyExperience.DataImport.Service
 {
     public static class ExcelReaderService
     {
@@ -27,7 +27,7 @@ namespace FamilyExperience.Dataimport.Service
                 }
             }
 
-            const int startRow = 4;
+            const int startRow = 3;
 
             for (var rowNum = startRow; rowNum <= workSheetDetails.Dimension.End.Row; rowNum++)
             {

@@ -1,8 +1,7 @@
-﻿using System.Text.Json;
-using FamilyExperience.Dataimport.Models;
+﻿using FamilyExperience.DataImport.Models;
 using Newtonsoft.Json;
 
-namespace FamilyExperience.Dataimport.Service
+namespace FamilyExperience.DataImport.Service
 {
     public class PostcodeLocationService
     {

@@ -1,4 +1,4 @@
-﻿namespace FamilyExperience.Dataimport.Models
+﻿namespace FamilyExperience.DataImport.Models
 {
     public class LongitudeLatitude
     {

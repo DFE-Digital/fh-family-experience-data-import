@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using FamilyExperience.Dataimport.Models;
+using FamilyExperience.DataImport.Models;
 using FamilyHubs.ServiceDirectory.Shared.Enums;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralContacts;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralCostOptions;
@@ -19,7 +19,7 @@ using FamilyHubs.ServiceDirectory.Shared.Models.Api.OrganisationType;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.ServiceType;
 using Newtonsoft.Json;
 
-namespace FamilyExperience.Dataimport.Service
+namespace FamilyExperience.DataImport.Service
 {
     public class TransformDataService
     {
