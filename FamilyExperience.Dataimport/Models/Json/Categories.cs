@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace FamilyExperience.Dataimport.Models.Json
 {
     public class Categories

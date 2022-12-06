@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FamilyExperience.Dataimport.Converter
 {
-    public class ListorSingleConverter<T> : Newtonsoft.Json.JsonConverter
+    public class ListorSingleConverter<T> : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

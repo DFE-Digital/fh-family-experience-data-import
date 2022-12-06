@@ -1,22 +1,22 @@
-﻿using FamilyExperience.Dataimport.Helper;
-using Newtonsoft.Json;
-using FamilyExperience.Dataimport.Models.Json;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OrganisationType;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralOrganisations;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServices;
-using FamilyExperience.Dataimport.Models.API;
-using FamilyExperience.Dataimport.Service;
+﻿using System.Globalization;
 using System.Text;
-using System.Globalization;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralRegularSchedule;
+using FamilyExperience.Dataimport.Helper;
+using FamilyExperience.Dataimport.Models.API;
+using FamilyExperience.Dataimport.Models.Json;
+using FamilyExperience.Dataimport.Service;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralContacts;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralPhones;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.ServiceType;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralCostOptions;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServiceAtLocations;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralLocations;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralPhysicalAddresses;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralEligibilitys;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralLocations;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralOrganisations;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralPhones;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralPhysicalAddresses;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralRegularSchedule;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServiceAtLocations;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServices;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.OrganisationType;
+using FamilyHubs.ServiceDirectory.Shared.Models.Api.ServiceType;
+using Newtonsoft.Json;
 
 namespace FamilyExperience.Dataimport
 {
@@ -62,7 +62,7 @@ namespace FamilyExperience.Dataimport
 
                 var test = ThRoot.services.Take(3);
 
-                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto()
+                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto
                 {
                     Name = "Tower Hamlets council",
                     Url = "https://www.towerhamlets.gov.uk/",
@@ -75,7 +75,7 @@ namespace FamilyExperience.Dataimport
                 foreach (var service in test)
                 {
                     openReferralOrgRecord.Services.Add(
-                        new OpenReferralServiceDto()
+                        new OpenReferralServiceDto
                         {
                             Id = Guid.NewGuid().ToString(),
                             Name = service.ServiceName,
@@ -123,7 +123,7 @@ namespace FamilyExperience.Dataimport
                     BaseAddress = new Uri("https://localhost:7022/")
 
                 };
-                var apiRequest = new HttpRequestMessage()
+                var apiRequest = new HttpRequestMessage
                 {
                     Method = HttpMethod.Put,
                     RequestUri = new Uri(_apiClient.BaseAddress + $"api/organizations/{orgid}"),
@@ -143,7 +143,7 @@ namespace FamilyExperience.Dataimport
 
         private static async Task<List<Taxonomy>> GetMasterTaxonomy()
         {
-            var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/taxonomies"));
+            var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + "api/taxonomies"));
             var apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Taxonomy>>(apiResponse);
         }
@@ -155,7 +155,7 @@ namespace FamilyExperience.Dataimport
             var cat = masterTaxonomies.Where(s => s.Name == DfeCategory.SubCategory).First();
 
             var categories = new List<ServiceTaxonomy>();
-            categories.Add(new ServiceTaxonomy()
+            categories.Add(new ServiceTaxonomy
             {
                 Id = Guid.NewGuid().ToString(),
                 Taxonomy = cat
@@ -189,7 +189,7 @@ namespace FamilyExperience.Dataimport
         {
 
             var serviceAtLocations = new List<OpenReferralServiceAtLocationDto>();
-            serviceAtLocations.Add(new OpenReferralServiceAtLocationDto()
+            serviceAtLocations.Add(new OpenReferralServiceAtLocationDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Location = GetLocations(service),
@@ -202,7 +202,7 @@ namespace FamilyExperience.Dataimport
         private OpenReferralLocationDto GetLocations(THService service)
         {
             var longlatDetails = GetLongitudeLatitudeForPostcode(service.Postcode);
-            return new OpenReferralLocationDto()
+            return new OpenReferralLocationDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = service.LocationName,
@@ -219,7 +219,7 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralEligibilityDto> GetEligibilities(THService service)
         {
             var eligibilities = new List<OpenReferralEligibilityDto>();
-            eligibilities.Add(new OpenReferralEligibilityDto()
+            eligibilities.Add(new OpenReferralEligibilityDto
             {
                 Id = Guid.NewGuid().ToString(),
                 // Maximum_age = service.MaximumAge,
@@ -247,10 +247,8 @@ namespace FamilyExperience.Dataimport
                 return details.Count >= 1 ? details.FirstOrDefault() : PostCodeLookUp(postcode, longitudeLatitude);
 
             }
-            else
-            {
-                return PostCodeLookUp(postcode, longitudeLatitude);
-            }
+
+            return PostCodeLookUp(postcode, longitudeLatitude);
         }
 
         private LongitudeLatitude PostCodeLookUp(string postcode, LongitudeLatitude longitudeLatitude)
@@ -286,7 +284,7 @@ namespace FamilyExperience.Dataimport
 
         private OpenReferralCostOptionDto GetCost(string providercost, string option)
         {
-            return new OpenReferralCostOptionDto()
+            return new OpenReferralCostOptionDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Amount = decimal.TryParse(providercost, out var costDecimal) ? costDecimal : 0,
@@ -297,7 +295,7 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralContactDto> GetContactDetails(THService service)
         {
             var ContactDetails = new List<OpenReferralContactDto>();
-            ContactDetails.Add(new OpenReferralContactDto()
+            ContactDetails.Add(new OpenReferralContactDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = service.LocationName,
@@ -314,7 +312,7 @@ namespace FamilyExperience.Dataimport
             //CheckIfLocationExists(service.Postcode);
 
 
-            PhysicalAddresses.Add(new OpenReferralPhysicalAddressDto()
+            PhysicalAddresses.Add(new OpenReferralPhysicalAddressDto
             {
                 Address_1 = string.IsNullOrEmpty(service.Address) ? $"{service.Street}, {service.Town}" : $"{service.Address}, {service.Street},{service.Town}",
                 City = service.Town,
@@ -337,14 +335,14 @@ namespace FamilyExperience.Dataimport
         {
             List<OpenReferralPhoneDto> contactNumbers = new();
 
-            contactNumbers.Add(new OpenReferralPhoneDto() { Number = service.Number, Id = Guid.NewGuid().ToString() });
-            if (!string.IsNullOrEmpty(service.Mobile)) contactNumbers.Add(new OpenReferralPhoneDto() { Number = service.Mobile, Id = Guid.NewGuid().ToString() });
+            contactNumbers.Add(new OpenReferralPhoneDto { Number = service.Number, Id = Guid.NewGuid().ToString() });
+            if (!string.IsNullOrEmpty(service.Mobile)) contactNumbers.Add(new OpenReferralPhoneDto { Number = service.Mobile, Id = Guid.NewGuid().ToString() });
             return contactNumbers;
         }
 
         private ServiceTypeDto GetServiceType()
         {
-            return new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience") { };
+            return new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience");
         }
     }
 }

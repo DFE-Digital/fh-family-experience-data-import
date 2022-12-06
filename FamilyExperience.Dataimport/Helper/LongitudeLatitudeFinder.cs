@@ -1,5 +1,6 @@
 ﻿using FamilyExperience.Dataimport.Models.API;
 using FamilyExperience.Dataimport.Service;
+
 namespace FamilyExperience.Dataimport.Helper
 {
     public class LongitudeLatitudeFinder
@@ -13,10 +14,8 @@ namespace FamilyExperience.Dataimport.Helper
                 var details = longitudeLatitudes.Where(x => x.Postcode == postcode).ToList();
                 return details.Count >= 1 ? details.FirstOrDefault() : PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService);
             }
-            else
-            {
-                return PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService);
-            }
+
+            return PostCodeLookUp(postcode, longitudeLatitude, _postcodeLocationService);
         }
 
         private LongitudeLatitude PostCodeLookUp(string postcode, LongitudeLatitude longitudeLatitude, PostcodeLocationService _postcodeLocationService)

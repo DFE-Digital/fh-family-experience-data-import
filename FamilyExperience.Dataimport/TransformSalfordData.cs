@@ -1,14 +1,13 @@
 ﻿using System.Text;
 using AutoMapper;
 using FamilyExperience.Dataimport.Mapping;
-using FamilyExperience.Dataimport.Models;
 using FamilyExperience.Dataimport.Models.API;
 using FamilyExperience.Dataimport.Models.Json;
-using Newtonsoft.Json;
+using FamilyExperience.Dataimport.Service;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralOrganisations;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralServices;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OrganisationType;
-using FamilyExperience.Dataimport.Service;
+using Newtonsoft.Json;
 
 namespace FamilyExperience.Dataimport
 {
@@ -37,7 +36,7 @@ namespace FamilyExperience.Dataimport
                 servicesList = await GetSalfordDataAsync();
                 var mapper = GetMapper();
 
-                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto() { Name = "Salford City Council", Url = "https://www.salford.gov.uk/", Description = "Salford City Council" };
+                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto { Name = "Salford City Council", Url = "https://www.salford.gov.uk/", Description = "Salford City Council" };
                 openReferralOrgRecord.Id = orgId; // Guid.NewGuid().ToString();
                 openReferralOrgRecord.OrganisationType = GetOrganisationType();
 
@@ -94,7 +93,8 @@ namespace FamilyExperience.Dataimport
                     BaseAddress = new Uri("https://s181d01-as-fh-sd-api-dev.azurewebsites.net/")
 
                 };
-                var apiRequest = new HttpRequestMessage() {
+                var apiRequest = new HttpRequestMessage
+                {
                     Method = HttpMethod.Put, 
                     RequestUri = new Uri(_apiClient.BaseAddress + $"api/organizations/{orgId}"),
                     Content = new StringContent(JsonConvert.SerializeObject(openReferralOrgRecord),
@@ -110,7 +110,7 @@ namespace FamilyExperience.Dataimport
         private List<ContactDetails> GetContactDetails(Record service)
         {
             var ContactDetails = new List<ContactDetails>();
-            ContactDetails.Add(new ContactDetails()
+            ContactDetails.Add(new ContactDetails
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = string.IsNullOrEmpty(service.ContactName) ? service.Name: service.ContactName,
@@ -140,7 +140,7 @@ namespace FamilyExperience.Dataimport
         {
 
             var serviceAtLocations = new List<ServiceAtLocation>();
-            serviceAtLocations.Add(new ServiceAtLocation()
+            serviceAtLocations.Add(new ServiceAtLocation
             {
                 Id = Guid.NewGuid().ToString(),
                 LocationDetails = GetLocations(service)
@@ -174,10 +174,8 @@ namespace FamilyExperience.Dataimport
                 return details.Count >= 1 ? details.FirstOrDefault() : PostCodeLookUp(postcode, longitudeLatitude);
 
             }
-            else
-            {
-                return PostCodeLookUp(postcode, longitudeLatitude);
-            }
+
+            return PostCodeLookUp(postcode, longitudeLatitude);
         }
 
         private LongitudeLatitude PostCodeLookUp(string postcode, LongitudeLatitude longitudeLatitude)
@@ -196,7 +194,7 @@ namespace FamilyExperience.Dataimport
 
         private ServiceType GetServiceType()
         {
-            return new ServiceType() { Id = "2", Name = "FX", Description = "Family Experience" };
+            return new ServiceType { Id = "2", Name = "FX", Description = "Family Experience" };
         }
 
         private List<CostOption> GetCostOptions(Record service)
@@ -204,11 +202,11 @@ namespace FamilyExperience.Dataimport
             var CostOptions = new List<CostOption>(); 
             foreach (var cost in service.CostOption ?? new List<CostTable>())
             {
-                CostOptions.Add(new CostOption()
+                CostOptions.Add(new CostOption
                 {
                     Id = Guid.NewGuid().ToString(),
                     Amount = decimal.TryParse(cost.CostAmount, out var costDecimal) ? costDecimal : 0,
-                    Amount_description = cost.CostType is null ? string.Empty : cost.CostType.Displayname.ToString()
+                    Amount_description = cost.CostType is null ? string.Empty : cost.CostType.Displayname
                 });
             }
             return CostOptions;
@@ -220,7 +218,7 @@ namespace FamilyExperience.Dataimport
 
             //CheckIfLocationExists(service.Postcode);
 
-            PhysicalAddresses.Add(new PhysicalAddress()
+            PhysicalAddresses.Add(new PhysicalAddress
             {
                 Address_1 = string.IsNullOrEmpty(service.PublicAddress1) ? $"{service.PublicAddress2}, {service.PublicAddress3}" : $"{service.PublicAddress1}, {service.PublicAddress2},{service.PublicAddress3  }",
                 City = service.PublicAddress4,
@@ -243,7 +241,7 @@ namespace FamilyExperience.Dataimport
             List<ContactNumbers> contactNumbers = new();
             foreach (var contactNumber in contactPhoneNumbers ?? new List<string>())
             {
-                contactNumbers.Add(new ContactNumbers() { Number = contactNumber, Id = Guid.NewGuid().ToString() });
+                contactNumbers.Add(new ContactNumbers { Number = contactNumber, Id = Guid.NewGuid().ToString() });
             }
 
             return contactNumbers;
