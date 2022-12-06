@@ -223,8 +223,7 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralServiceDeliveryExDto> GetServiceDeliveries()
         {
             Enum.TryParse("Active", out ServiceDelivery serviceDevliveryType);
-            var serviceDeliveries = new List<OpenReferralServiceDeliveryExDto>();
-            serviceDeliveries.Add(new OpenReferralServiceDeliveryExDto(id:Guid.NewGuid().ToString(), serviceDelivery : serviceDevliveryType));
+            var serviceDeliveries = new List<OpenReferralServiceDeliveryExDto> {new OpenReferralServiceDeliveryExDto(id:Guid.NewGuid().ToString(), serviceDelivery : serviceDevliveryType)};
 
             return serviceDeliveries;
         }
@@ -274,9 +273,8 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralPhoneDto> GetContactNumbers(StandardData service)
         {
-            List<OpenReferralPhoneDto> contactNumbers = new();
+            List<OpenReferralPhoneDto> contactNumbers = new() {new OpenReferralPhoneDto { Number = service.PhoneToContactService, Id = Guid.NewGuid().ToString() }};
 
-            contactNumbers.Add(new OpenReferralPhoneDto { Number = service.PhoneToContactService, Id = Guid.NewGuid().ToString() });
             //if (!string.IsNullOrEmpty(service.TextToContactService)) contactNumbers.Add(new OpenReferralPhoneDto() { Number = service.TextToContactService, Id = Guid.NewGuid().ToString() });
             return contactNumbers;
         }
@@ -284,13 +282,15 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralContactDto> GetContactDetails(StandardData service)
         {
-            var ContactDetails = new List<OpenReferralContactDto>();
-            ContactDetails.Add(new OpenReferralContactDto
+            var ContactDetails = new List<OpenReferralContactDto>
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Telephone",
-                Phones = string.IsNullOrEmpty(service.PhoneToContactService)? null: GetContactNumbers(service)
-            });
+                new OpenReferralContactDto
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "Telephone",
+                    Phones = string.IsNullOrEmpty(service.PhoneToContactService)? null: GetContactNumbers(service)
+                }
+            };
 
             if (!string.IsNullOrEmpty(service.TextToContactService))
             {
@@ -345,10 +345,11 @@ namespace FamilyExperience.Dataimport
            // service.MinAge = service.MinAge //service.MinAge.IndexOf("years")>0 ? service.MinAge.Substring(0,service.MinAge.IndexOf("years")) : service.MinAge.Substring(0, service.MinAge.IndexOf("year"));
             //service.MaxAge = //service.MaxAge.IndexOf("years") > 0 ? service.MaxAge.Substring(0, service.MaxAge.IndexOf("years")) : service.MaxAge.Substring(0, service.MaxAge.IndexOf("year"));
 
-            var eligibilities = new List<OpenReferralEligibilityDto>();
-            eligibilities.Add(new OpenReferralEligibilityDto(id: Guid.NewGuid().ToString(), eligibility: "child",
-                maximum_age: Convert.ToInt32(service.MaxAge), minimum_age: Convert.ToInt32(service.MinAge))
-            );
+            var eligibilities = new List<OpenReferralEligibilityDto>
+            {
+                new OpenReferralEligibilityDto(id: Guid.NewGuid().ToString(), eligibility: "child",
+                    maximum_age: Convert.ToInt32(service.MaxAge), minimum_age: Convert.ToInt32(service.MinAge))
+            };
 
             return eligibilities;
 
@@ -357,8 +358,10 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralServiceAtLocationDto> GetServiceAtLocations(StandardData service)
         {
 
-            var serviceAtLocations = new List<OpenReferralServiceAtLocationDto>();
-            serviceAtLocations.Add(new OpenReferralServiceAtLocationDto(id: Guid.NewGuid().ToString(),location: GetLocations(service),regular_schedule:GetSchedules(service),holidayScheduleCollection:null));
+            var serviceAtLocations = new List<OpenReferralServiceAtLocationDto>
+            {
+                new OpenReferralServiceAtLocationDto(id: Guid.NewGuid().ToString(),location: GetLocations(service),regular_schedule:GetSchedules(service),holidayScheduleCollection:null)
+            };
             return serviceAtLocations;
         }
 
@@ -382,11 +385,9 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralRegularScheduleDto> GetSchedules(StandardData service)
         {
             
-            var schedules = new List<OpenReferralRegularScheduleDto>();  
-
-            
-
-                schedules.Add(new OpenReferralRegularScheduleDto(Guid.NewGuid().ToString(),
+            var schedules = new List<OpenReferralRegularScheduleDto>
+            {
+                new OpenReferralRegularScheduleDto(Guid.NewGuid().ToString(),
                     description: service.OpeningHoursDescription,
                     opens_at: null,
                     closes_at: null,
@@ -397,21 +398,22 @@ namespace FamilyExperience.Dataimport
                     interval: null,
                     valid_from: null,
                     valid_to: null
-                    ));
-            
-            
+                )
+            };
+
+
             return schedules;
         }
 
 
         private List<OpenReferralPhysicalAddressDto> GetPhysicalAddress(StandardData service)
         {
-            var PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
+            var PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>
+            {
+                //CheckIfLocationExists(service.Postcode);
+                new OpenReferralPhysicalAddressDto(Guid.NewGuid().ToString(), service.AddressLine1, service.TownorCity, service.Postcode, "UK", service.County)
+            };
 
-            //CheckIfLocationExists(service.Postcode);
-
-            PhysicalAddresses.Add(new OpenReferralPhysicalAddressDto(Guid.NewGuid().ToString(), service.AddressLine1, service.TownorCity, service.Postcode, "UK", service.County)
-            );
             return PhysicalAddresses;
 
         }

@@ -66,11 +66,11 @@ namespace FamilyExperience.Dataimport
                 {
                     Name = "Tower Hamlets council",
                     Url = "https://www.towerhamlets.gov.uk/",
-                    Description = "Tower Hamlets council"
+                    Description = "Tower Hamlets council",
+                    Id = orgid, //Guid.NewGuid().ToString();
+                    OrganisationType = GetOrganisationType(),
+                    Services = new List<OpenReferralServiceDto>()
                 };
-                openReferralOrgRecord.Id = orgid; //Guid.NewGuid().ToString();
-                openReferralOrgRecord.OrganisationType = GetOrganisationType();
-                openReferralOrgRecord.Services = new List<OpenReferralServiceDto>();
 
                 foreach (var service in test)
                 {
@@ -154,12 +154,14 @@ namespace FamilyExperience.Dataimport
             var DfeCategory = categoriesList.First(k => k.Category == service.Category);
             var cat = masterTaxonomies.First(s => s.Name == DfeCategory.SubCategory);
 
-            var categories = new List<ServiceTaxonomy>();
-            categories.Add(new ServiceTaxonomy
+            var categories = new List<ServiceTaxonomy>
             {
-                Id = Guid.NewGuid().ToString(),
-                Taxonomy = cat
-            });
+                new ServiceTaxonomy
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Taxonomy = cat
+                }
+            };
 
             return categories;
         }
@@ -188,13 +190,15 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralServiceAtLocationDto> GetServiceAtLocations(THService service)
         {
 
-            var serviceAtLocations = new List<OpenReferralServiceAtLocationDto>();
-            serviceAtLocations.Add(new OpenReferralServiceAtLocationDto
+            var serviceAtLocations = new List<OpenReferralServiceAtLocationDto>
             {
-                Id = Guid.NewGuid().ToString(),
-                Location = GetLocations(service),
-                Regular_schedule = GetSchedules(service)
-            });
+                new OpenReferralServiceAtLocationDto
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Location = GetLocations(service),
+                    Regular_schedule = GetSchedules(service)
+                }
+            };
             return serviceAtLocations;
         }
 
@@ -271,33 +275,36 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralContactDto> GetContactDetails(THService service)
         {
-            var ContactDetails = new List<OpenReferralContactDto>();
-            ContactDetails.Add(new OpenReferralContactDto
+            var ContactDetails = new List<OpenReferralContactDto>
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = service.LocationName,
-                Phones = GetContactNumbers(service)
-            });
+                new OpenReferralContactDto
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = service.LocationName,
+                    Phones = GetContactNumbers(service)
+                }
+            };
 
             return ContactDetails;
         }
 
         private List<OpenReferralPhysicalAddressDto> GetPhysicalAddress(THService service)
         {
-            var PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
-
-            //CheckIfLocationExists(service.Postcode);
-
-
-            PhysicalAddresses.Add(new OpenReferralPhysicalAddressDto
+            var PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>
             {
-                Address_1 = string.IsNullOrEmpty(service.Address) ? $"{service.Street}, {service.Town}" : $"{service.Address}, {service.Street},{service.Town}",
-                City = service.Town,
-                Postal_code = service.Postcode,
-                Country = "UK",
-                Id = Guid.NewGuid().ToString()
+                //CheckIfLocationExists(service.Postcode);
+                new OpenReferralPhysicalAddressDto
+                {
+                    Address_1 = string.IsNullOrEmpty(service.Address) ? $"{service.Street}, {service.Town}" : $"{service.Address}, {service.Street},{service.Town}",
+                    City = service.Town,
+                    Postal_code = service.Postcode,
+                    Country = "UK",
+                    Id = Guid.NewGuid().ToString()
 
-            });
+                }
+            };
+
+
             return PhysicalAddresses;
 
         }
@@ -310,9 +317,8 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralPhoneDto> GetContactNumbers(THService service)
         {
-            List<OpenReferralPhoneDto> contactNumbers = new();
+            List<OpenReferralPhoneDto> contactNumbers = new() {new OpenReferralPhoneDto { Number = service.Number, Id = Guid.NewGuid().ToString() }};
 
-            contactNumbers.Add(new OpenReferralPhoneDto { Number = service.Number, Id = Guid.NewGuid().ToString() });
             if (!string.IsNullOrEmpty(service.Mobile)) contactNumbers.Add(new OpenReferralPhoneDto { Number = service.Mobile, Id = Guid.NewGuid().ToString() });
             return contactNumbers;
         }

@@ -36,9 +36,13 @@ namespace FamilyExperience.Dataimport
                 servicesList = await GetSalfordDataAsync();
                 var mapper = GetMapper();
 
-                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto { Name = "Salford City Council", Url = "https://www.salford.gov.uk/", Description = "Salford City Council" };
-                openReferralOrgRecord.Id = orgId; // Guid.NewGuid().ToString();
-                openReferralOrgRecord.OrganisationType = GetOrganisationType();
+                var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto
+                {
+                    Name = "Salford City Council", Url = "https://www.salford.gov.uk/",
+                    Description = "Salford City Council",
+                    Id = orgId, // Guid.NewGuid().ToString();
+                    OrganisationType = GetOrganisationType()
+                };
 
                 foreach (var service in servicesList.records)
                 {
@@ -107,13 +111,15 @@ namespace FamilyExperience.Dataimport
 
         private List<ContactDetails> GetContactDetails(Record service)
         {
-            var ContactDetails = new List<ContactDetails>();
-            ContactDetails.Add(new ContactDetails
+            var ContactDetails = new List<ContactDetails>
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = string.IsNullOrEmpty(service.ContactName) ? service.Name: service.ContactName,
-                Numbers = GetContactNumbers(service.ContactTelephone)
-            });
+                new ContactDetails
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = string.IsNullOrEmpty(service.ContactName) ? service.Name: service.ContactName,
+                    Numbers = GetContactNumbers(service.ContactTelephone)
+                }
+            };
 
             return ContactDetails;
         }
@@ -121,21 +127,25 @@ namespace FamilyExperience.Dataimport
         private List<ServiceAtLocation> GetServiceAtLocations(Record service)
         {
 
-            var serviceAtLocations = new List<ServiceAtLocation>();
-            serviceAtLocations.Add(new ServiceAtLocation
+            var serviceAtLocations = new List<ServiceAtLocation>
             {
-                Id = Guid.NewGuid().ToString(),
-                LocationDetails = GetLocations(service)
-            });
+                new ServiceAtLocation
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    LocationDetails = GetLocations(service)
+                }
+            };
 
             return serviceAtLocations;
         }
 
         private Location GetLocations(Record service)        {
-            var location = new Location();
-            location.Id = Guid.NewGuid().ToString();
-            location.Name = service.Name.Substring(0, service.Name.Length > 50 ? 50 : service.Name.Length);
-            location.Description = service.Name.Substring(0, service.Name.Length > 50 ? 50 : service.Name.Length);
+            var location = new Location
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = service.Name.Substring(0, service.Name.Length > 50 ? 50 : service.Name.Length),
+                Description = service.Name.Substring(0, service.Name.Length > 50 ? 50 : service.Name.Length)
+            };
 
             var longlatDetails = GetLongitudeLatitudeForPostcode(service.Postcode);
 
@@ -196,19 +206,20 @@ namespace FamilyExperience.Dataimport
 
         private List<PhysicalAddress> GetPhysicalAddress(Record service)
         {
-            var PhysicalAddresses = new List<PhysicalAddress>();
-
-            //CheckIfLocationExists(service.Postcode);
-
-            PhysicalAddresses.Add(new PhysicalAddress
+            var PhysicalAddresses = new List<PhysicalAddress>
             {
-                Address_1 = string.IsNullOrEmpty(service.PublicAddress1) ? $"{service.PublicAddress2}, {service.PublicAddress3}" : $"{service.PublicAddress1}, {service.PublicAddress2},{service.PublicAddress3  }",
-                City = service.PublicAddress4,
-                Postal_code = service.Postcode,
-                Country = "UK",
-                Id = Guid.NewGuid().ToString()
+                //CheckIfLocationExists(service.Postcode);
+                new PhysicalAddress
+                {
+                    Address_1 = string.IsNullOrEmpty(service.PublicAddress1) ? $"{service.PublicAddress2}, {service.PublicAddress3}" : $"{service.PublicAddress1}, {service.PublicAddress2},{service.PublicAddress3  }",
+                    City = service.PublicAddress4,
+                    Postal_code = service.Postcode,
+                    Country = "UK",
+                    Id = Guid.NewGuid().ToString()
 
-            });
+                }
+            };
+
             return PhysicalAddresses;
 
         }
