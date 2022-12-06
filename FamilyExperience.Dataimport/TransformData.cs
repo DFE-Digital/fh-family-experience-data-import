@@ -56,8 +56,6 @@ namespace FamilyExperience.Dataimport
                 _masterOrgs = await GetOrganisations();
 
 
-                var path = HttpUtility.HtmlEncode("https://educationgovuk-my.sharepoint.com/:x:/r/personal/ben_macinnes_education_gov_uk/Documents/Documents/Local%20Authority%20Data%20Capture.xlsm?d=waa7a87fc5c354244ba52d29178afebb4&csf=1&web=1&e=9hs4DI");
-
                 var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\Local Authority Data Capture v3.0.xlsm");
                 var services = JsonConvert.DeserializeObject<List<StandardData>>(mainTHServices);
                 services = services.Where(k => k.OrganisationName != "").ToList();
@@ -68,7 +66,7 @@ namespace FamilyExperience.Dataimport
                 //openReferralOrgRecord.Services = new List<OpenReferralServiceDto>();
 
                 var orgs = services.Where(k => k.OrganisationName is not null).ToList();
-                var Services = new List<OpenReferralServiceDto>();
+                new List<OpenReferralServiceDto>();
 
 
 

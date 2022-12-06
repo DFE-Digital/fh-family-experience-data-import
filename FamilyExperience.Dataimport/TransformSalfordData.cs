@@ -62,8 +62,6 @@ namespace FamilyExperience.Dataimport
 
                     openReferralOrgRecord.AdministractiveDistrictCode = GetLongitudeLatitudeForPostcode(service.Postcode).AdministractiveDistrictCode;
 
-                    var regularSchedules = new List<RegularSchedule>();
-
                     // Regular and Holiday schedule, Agerange needs to be implemented
 
                     //foreach (var session in item.DatesessionInfo)
@@ -119,22 +117,6 @@ namespace FamilyExperience.Dataimport
 
             return ContactDetails;
         }
-
-
-        private void CheckIfLocationExists(string postcode)
-        {
-            if (servicesList.records.Count(x => x.ServiceAtLocations is not null) > 0)
-            {
-                var itemss = servicesList.records
-                .Where(s => s.ServiceAtLocations.Any(st => st.LocationDetails.PhysicalAddresses.Any(si => si.Postal_code == postcode)))
-                 .ToList();
-            }
-
-
-
-          
-        }
-
 
         private List<ServiceAtLocation> GetServiceAtLocations(Record service)
         {
