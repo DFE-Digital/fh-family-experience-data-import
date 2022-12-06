@@ -1,5 +1,4 @@
 ﻿using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralTaxonomys;
-using Newtonsoft.Json;
 
 namespace FamilyExperience.Dataimport.Models
 {

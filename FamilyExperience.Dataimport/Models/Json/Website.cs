@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FamilyExperience.Dataimport.Models
+﻿namespace FamilyExperience.Dataimport.Models
 {
     public class Website
     {
