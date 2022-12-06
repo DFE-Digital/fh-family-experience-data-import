@@ -6,7 +6,7 @@ namespace FamilyExperience.Dataimport.Helper
     public class LongitudeLatitudeFinder
     {
         private List<LongitudeLatitude> longitudeLatitudes = new List<LongitudeLatitude>();
-        public LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode, PostcodeLocationService _postcodeLocationService)
+        public LongitudeLatitude GetLongitudeLatitudeForPostcode(string postcode, PostcodeLocationService _postcodeLocationService)
         {
             var longitudeLatitude = new LongitudeLatitude();
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)

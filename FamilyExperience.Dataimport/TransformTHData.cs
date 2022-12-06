@@ -23,7 +23,7 @@ namespace FamilyExperience.Dataimport
     public class TransformTHData
     {
         protected static HttpClient _client;
-        private static HttpClient? _apiClient;
+        private static HttpClient _apiClient;
         private readonly PostcodeLocationService _postcodeLocationService;
         private readonly List<LongitudeLatitude> longitudeLatitudes;
         private List<THAvailability> tHAvailabilities;
@@ -238,7 +238,7 @@ namespace FamilyExperience.Dataimport
         }
 
 
-        private LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode)
+        private LongitudeLatitude GetLongitudeLatitudeForPostcode(string postcode)
         {
             var longitudeLatitude = new LongitudeLatitude();
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)

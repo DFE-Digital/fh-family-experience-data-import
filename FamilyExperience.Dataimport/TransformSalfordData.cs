@@ -14,7 +14,7 @@ namespace FamilyExperience.Dataimport
     public class TransformSalfordData
     {
         private static HttpClient _client;
-        private static HttpClient? _apiClient;
+        private static HttpClient _apiClient;
         private readonly PostcodeLocationService _postcodeLocationService;
         private readonly List<LongitudeLatitude> longitudeLatitudes;
         private Rootobject servicesList { get;set;}
@@ -165,7 +165,7 @@ namespace FamilyExperience.Dataimport
             return location;
         }
 
-        private LongitudeLatitude? GetLongitudeLatitudeForPostcode(string postcode)
+        private LongitudeLatitude GetLongitudeLatitudeForPostcode(string postcode)
         {
             var longitudeLatitude = new LongitudeLatitude();
             if (longitudeLatitudes is not null && longitudeLatitudes.Count > 0)

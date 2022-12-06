@@ -6,7 +6,7 @@ namespace FamilyExperience.Dataimport.Models.API
     {
         public string Id { get; set; }
         public Location LocationDetails { get; set; }
-        public List<OpenReferralRegularScheduleDto>? RegularSchedules { get; set; }
-        public List<HolidaySchedule>? HolidaySchedules { get; set; }
+        public List<OpenReferralRegularScheduleDto> RegularSchedules { get; set; }
+        public List<HolidaySchedule> HolidaySchedules { get; set; }
     }
 }

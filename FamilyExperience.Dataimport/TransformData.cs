@@ -31,7 +31,7 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralTaxonomyDto> masterTaxonomies;
         private List<OpenReferralOrganisationDto> _masterOrgs;
         private OpenReferralOrganisationWithServicesDto _openReferralOrganisationWithServicesDtos;
-        private static HttpClient? _apiClient;
+        private static HttpClient _apiClient;
         protected readonly string FamilyHub = "Family Hub";
         public TransformData()
         {
@@ -173,7 +173,7 @@ namespace FamilyExperience.Dataimport
                 Console.WriteLine(ex.Message); }
         }
 
-        private OpenReferralServiceDto CreateOpenReferralServiceDto(StandardData orgService, string orgid, string? serviceId)
+        private OpenReferralServiceDto CreateOpenReferralServiceDto(StandardData orgService, string orgid, string serviceId)
         {
 
             return new OpenReferralServiceDto
@@ -429,7 +429,7 @@ namespace FamilyExperience.Dataimport
 
         private OpenReferralOrganisationDto GetOrganisationInfo(string organisationName)
         {         
-            return _masterOrgs.Where(k=>k.Name==organisationName).FirstOrDefault();
+            return _masterOrgs.FirstOrDefault(k => k.Name==organisationName);
         }
 
         private async Task<OpenReferralOrganisationWithServicesDto> GetServicesForOrganisation(string organisationId)

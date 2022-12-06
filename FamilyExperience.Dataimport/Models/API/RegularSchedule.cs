@@ -7,11 +7,11 @@
         public string Description { get; set; }
         public DateTime? OpensAt { get; set; }
         public DateTime? ClosesAt { get; set; }
-        public string? Byday { get; set; }
-        public string? Bymonthday { get; set; }
-        public string? Dtstart { get; set; }
-        public string? Freq { get; set; }
-        public string? Interval { get; set; }
+        public string Byday { get; set; }
+        public string Bymonthday { get; set; }
+        public string Dtstart { get; set; }
+        public string Freq { get; set; }
+        public string Interval { get; set; }
         public DateTime?  ValidFrom { get; set; }
         public DateTime? ValidTo { get; set; }
         public int Weekday { get; set; }
