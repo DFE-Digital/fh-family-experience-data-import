@@ -1,27 +1,13 @@
-﻿
+﻿using FamilyExperience.Dataimport.Service;
 
 namespace FamilyExperience.Dataimport
 {
-    class Program
+    public class Program
     {
-
-        static  void Main()
+        public static async Task Main()
         {
-            //TransformSalfordData transformData = new TransformSalfordData();
-            //transformData.ProcessDataAsync().Wait();
-
-            //TransformTHData transformTHData = new TransformTHData();
-            //transformTHData.ProcessDataAsync().Wait();
-
-
-            var transformData = new TransformData();
-            transformData.ProcessDataAsync().Wait();
+            var transformData = new TransformDataService();
+            await transformData.ProcessDataAsync();
         }
-           
     }
-        
-    } 
-
-
-   
-
+}

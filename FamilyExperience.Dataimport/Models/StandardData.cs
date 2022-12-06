@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace FamilyExperience.Dataimport.Models.Json
+namespace FamilyExperience.Dataimport.Models
 {
     public class StandardData
     {
-
-        [JsonProperty("Local Authority")]        
+        [JsonProperty("Local Authority")]
         public string LAName { get; set; }
 
         [JsonProperty("Organisation type")]
@@ -32,7 +31,6 @@ namespace FamilyExperience.Dataimport.Models.Json
         [JsonProperty("Location type")]
         public string LocationType { get; set; }
 
-
         [JsonProperty("Address line 1")]
         public string AddressLine1 { get; set; }
 
@@ -40,7 +38,7 @@ namespace FamilyExperience.Dataimport.Models.Json
         public string AddressLine2 { get; set; }
 
         [JsonProperty("Town or City")]
-        public string TownorCity { get; set; }
+        public string TownOrCity { get; set; }
 
         [JsonProperty("County")]
         public string County { get; set; }
@@ -54,17 +52,14 @@ namespace FamilyExperience.Dataimport.Models.Json
         [JsonProperty("Phone number for people wanting to phone the service")]
         public string PhoneToContactService { get; set; }
 
-
         [JsonProperty("Website")]
         public string Website { get; set; }
 
         [JsonProperty("Phone number for people wanting to text the service")]
         public string TextToContactService { get; set; }
 
-
         [JsonProperty("Sub- Category")]
         public string Category { get; set; }
-       
 
         [JsonProperty("Cost")]
         public string Cost { get; set; }
@@ -90,10 +85,7 @@ namespace FamilyExperience.Dataimport.Models.Json
         [JsonProperty("Opening hours description")]
         public string OpeningHoursDescription { get; set; }
 
-
         [JsonProperty("More Details (service description)")]
         public string ServiceDescription { get; set; }
-
-
     }
 }
