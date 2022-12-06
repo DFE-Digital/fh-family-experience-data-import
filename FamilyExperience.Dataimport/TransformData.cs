@@ -33,6 +33,7 @@ namespace FamilyExperience.Dataimport
         private OpenReferralOrganisationWithServicesDto _openReferralOrganisationWithServicesDtos;
         private static HttpClient _apiClient;
         protected readonly string FamilyHub = "Family Hub";
+
         public TransformData()
         {
             _longitudeLatitudeFinder = new LongitudeLatitudeFinder();
@@ -40,10 +41,10 @@ namespace FamilyExperience.Dataimport
             masterTaxonomies = new List<OpenReferralTaxonomyDto>();
             _apiClient = new HttpClient
             {
-               // BaseAddress = new Uri("https://localhost:7022/")
+                // BaseAddress = new Uri("https://localhost:7022/")
                 BaseAddress = new Uri("https://s181d01-as-fh-sd-api-dev.azurewebsites.net/")
             };
-           
+
         }
 
 
@@ -65,10 +66,6 @@ namespace FamilyExperience.Dataimport
                 //openReferralOrgRecord.Services = new List<OpenReferralServiceDto>();
 
                 var orgs = services.Where(k => k.OrganisationName is not null).ToList();
-                new List<OpenReferralServiceDto>();
-
-
-
 
                 //orgid = openReferralOrganisationDto.Id;
                 //var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto()
@@ -122,7 +119,7 @@ namespace FamilyExperience.Dataimport
                     var existingService = _openReferralOrganisationWithServicesDtos.Services.FirstOrDefault(x => x.Name == orgService.ServiceName);
                     if (existingService != null && !string.IsNullOrEmpty(existingService.Id))
                     {
-                      await   UpdateService(existingService);
+                        await UpdateService(existingService);
                     }
                     else
                     {
@@ -142,13 +139,15 @@ namespace FamilyExperience.Dataimport
                     }
 
                 }
-                               
 
-              
+
+
 
             }
-            catch (Exception ex) { 
-                Console.Write(ex.Message); }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
         }
 
         private async Task UpdateService(OpenReferralServiceDto service)
@@ -163,11 +162,13 @@ namespace FamilyExperience.Dataimport
                         Encoding.UTF8, "application/json")
                 };
                 var isapiResponse = await _apiClient.SendAsync(apiRequest);
-                
+
                 Console.WriteLine(isapiResponse.StatusCode);
             }
-            catch (Exception ex) {
-                Console.WriteLine(ex.Message); }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private OpenReferralServiceDto CreateOpenReferralServiceDto(StandardData orgService, string orgid, string serviceId)
@@ -196,11 +197,11 @@ namespace FamilyExperience.Dataimport
 
             };
         }
-        
+
 
         private List<OpenReferralServiceTaxonomyDto> GetCategories(StandardData service)
-        {          
-           
+        {
+
 
             var categories = new List<OpenReferralServiceTaxonomyDto>();
             if (string.IsNullOrEmpty(service.Category))
@@ -215,7 +216,7 @@ namespace FamilyExperience.Dataimport
             //    categories.Add(new OpenReferralServiceTaxonomyDto(
             //        Guid.NewGuid().ToString(), taxonomy));
             //}
-            
+
 
             return categories;
         }
@@ -223,7 +224,7 @@ namespace FamilyExperience.Dataimport
         private List<OpenReferralServiceDeliveryExDto> GetServiceDeliveries()
         {
             Enum.TryParse("Active", out ServiceDelivery serviceDevliveryType);
-            var serviceDeliveries = new List<OpenReferralServiceDeliveryExDto> {new OpenReferralServiceDeliveryExDto(id:Guid.NewGuid().ToString(), serviceDelivery : serviceDevliveryType)};
+            var serviceDeliveries = new List<OpenReferralServiceDeliveryExDto> { new OpenReferralServiceDeliveryExDto(id: Guid.NewGuid().ToString(), serviceDelivery: serviceDevliveryType) };
 
             return serviceDeliveries;
         }
@@ -237,43 +238,40 @@ namespace FamilyExperience.Dataimport
             }
             return openReferralLanguages;
         }
-        
+
 
         private static async Task<List<OpenReferralTaxonomyDto>> GetMasterTaxonomy()
         {
             var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + "api/taxonomies"));
             var apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
             var t = JsonConvert.DeserializeObject<RootTaxonomyobject>(apiResponse);
-            return t.items.ToList();
+            return t?.items.ToList();
         }
 
 
         private static OrganisationTypeDto GetOrganisationType(string type)
         {
-            switch(type)
+            return type switch
             {
-                case "Local Authority": return new OrganisationTypeDto("1", "LA", "Local Authority"); 
-                case "Voluntary and Community Sector": return
-                    new OrganisationTypeDto("2", "VCFS", "Voluntary, Charitable, Faith Sector"); 
-            case "Public / Private Company eg: Child Care":
-                    return new OrganisationTypeDto("3", "Company", "Public / Private Company eg: Child Care Centre");
-                case "Family Hub":
-                    return new OrganisationTypeDto("4", "FamilyHub", "Family Hubs");
-            }
-            return null;
+                "Local Authority" => new OrganisationTypeDto("1", "LA", "Local Authority"),
+                "Voluntary and Community Sector" => new OrganisationTypeDto("2", "VCFS", "Voluntary, Charitable, Faith Sector"),
+                "Public / Private Company eg: Child Care" => new OrganisationTypeDto("3", "Company", "Public / Private Company eg: Child Care Centre"),
+                "Family Hub" => new OrganisationTypeDto("4", "FamilyHub", "Family Hubs"),
+                _ => null
+            };
         }
 
         // get the confirmation
         private ServiceTypeDto GetServiceType(string type)
         {
             // return new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience");
-            return (type == "Local Authority" || type== "Family Hub")  ? new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience")
+            return (type == "Local Authority" || type == "Family Hub") ? new ServiceTypeDto(id: "2", name: "FX", description: "Family Experience")
             : new ServiceTypeDto(id: "1", name: "IS", description: "Information Sharing");
         }
 
         private List<OpenReferralPhoneDto> GetContactNumbers(StandardData service)
         {
-            List<OpenReferralPhoneDto> contactNumbers = new() {new OpenReferralPhoneDto { Number = service.PhoneToContactService, Id = Guid.NewGuid().ToString() }};
+            List<OpenReferralPhoneDto> contactNumbers = new() { new OpenReferralPhoneDto { Number = service.PhoneToContactService, Id = Guid.NewGuid().ToString() } };
 
             //if (!string.IsNullOrEmpty(service.TextToContactService)) contactNumbers.Add(new OpenReferralPhoneDto() { Number = service.TextToContactService, Id = Guid.NewGuid().ToString() });
             return contactNumbers;
@@ -301,15 +299,15 @@ namespace FamilyExperience.Dataimport
                     Phones = new List<OpenReferralPhoneDto>
                     { new OpenReferralPhoneDto { Number = service.TextToContactService, Id = Guid.NewGuid().ToString() }
                     }
-                });                
-            }            
+                });
+            }
 
             return ContactDetails;
         }
 
         private OpenReferralCostOptionDto GetCost(string providercost, string option)
         {
-            providercost = providercost.Contains('£') ? providercost.Remove(0,1) : providercost;
+            providercost = providercost.Contains('£') ? providercost.Remove(0, 1) : providercost;
             return new OpenReferralCostOptionDto
             {
                 Id = Guid.NewGuid().ToString(),
@@ -328,9 +326,12 @@ namespace FamilyExperience.Dataimport
             }
             else
             {
-                if (!string.IsNullOrEmpty(service.CostPerUnit)) { CostOptions.Add(GetCost(service.CostInPounds
-                    ,service.CostPerUnit)); }
-            }          
+                if (!string.IsNullOrEmpty(service.CostPerUnit))
+                {
+                    CostOptions.Add(GetCost(service.CostInPounds
+                    , service.CostPerUnit));
+                }
+            }
 
             return CostOptions;
 
@@ -342,7 +343,7 @@ namespace FamilyExperience.Dataimport
             if (string.IsNullOrEmpty(service.MinAge) && string.IsNullOrEmpty(service.MaxAge)) return null;
 
 
-           // service.MinAge = service.MinAge //service.MinAge.IndexOf("years")>0 ? service.MinAge.Substring(0,service.MinAge.IndexOf("years")) : service.MinAge.Substring(0, service.MinAge.IndexOf("year"));
+            // service.MinAge = service.MinAge //service.MinAge.IndexOf("years")>0 ? service.MinAge.Substring(0,service.MinAge.IndexOf("years")) : service.MinAge.Substring(0, service.MinAge.IndexOf("year"));
             //service.MaxAge = //service.MaxAge.IndexOf("years") > 0 ? service.MaxAge.Substring(0, service.MaxAge.IndexOf("years")) : service.MaxAge.Substring(0, service.MaxAge.IndexOf("year"));
 
             var eligibilities = new List<OpenReferralEligibilityDto>
@@ -366,9 +367,9 @@ namespace FamilyExperience.Dataimport
         }
 
 
-        private OpenReferralLocationDto GetLocations(StandardData  service)
+        private OpenReferralLocationDto GetLocations(StandardData service)
         {
-            var longlatDetails =_longitudeLatitudeFinder.GetLongitudeLatitudeForPostcode(service.Postcode, _postcodeLocationService);
+            var longlatDetails = _longitudeLatitudeFinder.GetLongitudeLatitudeForPostcode(service.Postcode, _postcodeLocationService);
             return new OpenReferralLocationDto
             {
                 Id = Guid.NewGuid().ToString(),
@@ -384,7 +385,7 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralRegularScheduleDto> GetSchedules(StandardData service)
         {
-            
+
             var schedules = new List<OpenReferralRegularScheduleDto>
             {
                 new OpenReferralRegularScheduleDto(Guid.NewGuid().ToString(),
@@ -419,15 +420,15 @@ namespace FamilyExperience.Dataimport
         }
 
         private async Task<List<OpenReferralOrganisationDto>> GetOrganisations()
-        { 
+        {
             using var response = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + "api/organizations"));
             var apiResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<OpenReferralOrganisationDto>>(apiResponse);
         }
 
         private OpenReferralOrganisationDto GetOrganisationInfo(string organisationName)
-        {         
-            return _masterOrgs.FirstOrDefault(k => k.Name==organisationName);
+        {
+            return _masterOrgs.FirstOrDefault(k => k.Name == organisationName);
         }
 
         private async Task<OpenReferralOrganisationWithServicesDto> GetServicesForOrganisation(string organisationId)
