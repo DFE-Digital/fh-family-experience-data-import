@@ -32,6 +32,7 @@ namespace FamilyExperience.Dataimport
         private OpenReferralOrganisationWithServicesDto _openReferralOrganisationWithServicesDtos;
         private static HttpClient _apiClient;
         private const string FamilyHub = "Family Hub";
+        private const String Vcs = "Voluntary and Community Sector";
 
         public TransformData()
         {
@@ -52,7 +53,7 @@ namespace FamilyExperience.Dataimport
                 _masterTaxonomies = await GetMasterTaxonomy();
                 _masterOrgs = await GetOrganisations();
 
-                var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\Local Authority Data Capture v3.0.xlsm");
+                var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\Local Authority Data Capture v3.0 Parent And Toddler Groups.xlsm");
                 var services = JsonConvert.DeserializeObject<List<StandardData>>(mainTHServices) ?? new List<StandardData>();
                 services = services.Where(k => k.OrganisationName != "").ToList();
 
@@ -78,15 +79,17 @@ namespace FamilyExperience.Dataimport
                 {
                     var openReferralOrganisationDto = GetOrganisationInfo(orgService.OrganisationName);
 
-                    if (orgService.OrgType == FamilyHub && openReferralOrganisationDto == null)
+                    if ((orgService.OrgType == FamilyHub || orgService.OrgType == Vcs)  && openReferralOrganisationDto == null)
                     {
-                        var openReferralOrgRecord = new OpenReferralOrganisationDto
+                        var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto()
                         {
                             Name = orgService.OrganisationName,
                             Id = Guid.NewGuid().ToString(),
                             OrganisationType = GetOrganisationType(orgService.OrgType),
                             AdministractiveDistrictCode = _longitudeLatitudeFinder.GetLongitudeLatitudeForPostcode(orgService.Postcode, _postcodeLocationService).AdministractiveDistrictCode,
-                            Url = orgService.Website
+                            Url = orgService.Website,
+                            Services = null
+                            
                         };
 
                         var apiRequest = new HttpRequestMessage
