@@ -25,8 +25,8 @@ namespace FamilyExperience.Dataimport
     {
         protected static HttpClient _client;
         private static HttpClient? _apiClient;
-        private PostcodeLocationService _postcodeLocationService;
-        private List<LongitudeLatitude> longitudeLatitudes;
+        private readonly PostcodeLocationService _postcodeLocationService;
+        private readonly List<LongitudeLatitude> longitudeLatitudes;
         private List<THAvailability> tHAvailabilities;
         private List<Categories> categoriesList;
         private List<Taxonomy> masterTaxonomies;
@@ -304,7 +304,7 @@ namespace FamilyExperience.Dataimport
                 Id = Guid.NewGuid().ToString(),
                 Name = service.LocationName,
                 Phones = GetContactNumbers(service)
-            }); ;
+            });
 
             return ContactDetails;
         }

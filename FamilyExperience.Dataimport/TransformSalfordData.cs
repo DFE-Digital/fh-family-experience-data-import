@@ -15,8 +15,8 @@ namespace FamilyExperience.Dataimport
     {
         private static HttpClient _client;
         private static HttpClient? _apiClient;
-        private PostcodeLocationService _postcodeLocationService;
-        private List<LongitudeLatitude> longitudeLatitudes;
+        private readonly PostcodeLocationService _postcodeLocationService;
+        private readonly List<LongitudeLatitude> longitudeLatitudes;
         private Rootobject servicesList { get;set;}
 
 

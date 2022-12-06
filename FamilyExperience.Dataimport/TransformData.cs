@@ -27,8 +27,8 @@ namespace FamilyExperience.Dataimport
 {
     public class TransformData
     {
-        private LongitudeLatitudeFinder _longitudeLatitudeFinder;
-        private PostcodeLocationService _postcodeLocationService;
+        private readonly LongitudeLatitudeFinder _longitudeLatitudeFinder;
+        private readonly PostcodeLocationService _postcodeLocationService;
         private List<OpenReferralTaxonomyDto> masterTaxonomies;
         private List<OpenReferralOrganisationDto> _masterOrgs;
         private OpenReferralOrganisationWithServicesDto _openReferralOrganisationWithServicesDtos;
