@@ -59,8 +59,7 @@ namespace FamilyExperience.Dataimport
                 var THCategories = ExcelReader.ReadExcel(@"D:\DFE\TH\All_ProvidersV4V2_Availabilty.xlsx");
                 categoriesList = JsonConvert.DeserializeObject<List<Categories>>(THCategories);
 
-                //masterTaxonomies = await GetMasterTaxonomy();
-                
+                masterTaxonomies = await GetMasterTaxonomy();
 
                 var test = ThRoot.services.Take(3);
 
