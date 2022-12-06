@@ -6,7 +6,6 @@ using FamilyExperience.Dataimport.Models.Json;
 using FamilyExperience.Dataimport.Service;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralContacts;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralCostOptions;
-using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralEligibilitys;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralLocations;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralOrganisations;
 using FamilyHubs.ServiceDirectory.Shared.Models.Api.OpenReferralPhones;
@@ -60,7 +59,7 @@ namespace FamilyExperience.Dataimport
 
                 masterTaxonomies = await GetMasterTaxonomy();
 
-                var test = ThRoot.services.Take(3);
+                var test = ThRoot.services?.Take(3) ?? new List<THService>();
 
                 var openReferralOrgRecord = new OpenReferralOrganisationWithServicesDto
                 {
