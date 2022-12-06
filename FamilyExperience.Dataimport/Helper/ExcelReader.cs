@@ -20,8 +20,7 @@ namespace FamilyExperience.Dataimport.Helper
                 {                    
                     if (!string.IsNullOrEmpty(firstRowCell.Text))
                     {
-                        string firstColumn = string.Format("Column {0}", firstRowCell.Start.Column);
-                        excelasTable.Columns.Add(true ? firstRowCell.Text : firstColumn);
+                        excelasTable.Columns.Add(firstRowCell.Text);
                     }
                 }
                 var startRow = 4;                
@@ -29,10 +28,8 @@ namespace FamilyExperience.Dataimport.Helper
                 {
                     var wsRow = workSheetDetails.Cells[rowNum, 2, rowNum, excelasTable.Columns.Count];
                     DataRow row = excelasTable.Rows.Add();
-                    int count = 0;
                     foreach (var cell in wsRow)
                     {
-                        
                         row[cell.Start.Column-2] = cell.Text;
                        
                     }
