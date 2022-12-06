@@ -253,7 +253,7 @@ namespace FamilyExperience.Dataimport
         private static async Task<List<OpenReferralTaxonomyDto>> GetMasterTaxonomy()
         {
             var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/taxonomies"));
-            string apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
+            var apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
             var t = JsonConvert.DeserializeObject<RootTaxonomyobject>(apiResponse);
             return t.items.ToList();
         }
@@ -418,7 +418,7 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralPhysicalAddressDto> GetPhysicalAddress(StandardData service)
         {
-            List<OpenReferralPhysicalAddressDto> PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
+            var PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
 
             //CheckIfLocationExists(service.Postcode);
 
@@ -431,7 +431,7 @@ namespace FamilyExperience.Dataimport
         public async Task<List<OpenReferralOrganisationDto>> GetOrganisations()
         { 
             using var response = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/organizations"));
-            string apiResponse = await response.Content.ReadAsStringAsync();
+            var apiResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<OpenReferralOrganisationDto>>(apiResponse);
         }
 
@@ -443,7 +443,7 @@ namespace FamilyExperience.Dataimport
         public async Task<OpenReferralOrganisationWithServicesDto> GetServicesForOrganisation(string organisationId)
         {
             using var response = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/organizations/{organisationId}"));
-            string apiResponse = await response.Content.ReadAsStringAsync();
+            var apiResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<OpenReferralOrganisationWithServicesDto>(apiResponse);
         }
 

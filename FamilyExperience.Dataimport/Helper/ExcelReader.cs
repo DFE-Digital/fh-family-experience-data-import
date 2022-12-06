@@ -15,7 +15,7 @@ namespace FamilyExperience.Dataimport.Helper
                 }
 
                 var workSheetDetails = excelPackage.Workbook.Worksheets[0];                
-                DataTable excelasTable = new DataTable();
+                var excelasTable = new DataTable();
                 foreach (var firstRowCell in workSheetDetails.Cells[1, 1, 1, workSheetDetails.Dimension.End.Column])
                 {                    
                     if (!string.IsNullOrEmpty(firstRowCell.Text))
@@ -24,10 +24,10 @@ namespace FamilyExperience.Dataimport.Helper
                     }
                 }
                 var startRow = 4;                
-                for (int rowNum = startRow; rowNum <= workSheetDetails.Dimension.End.Row; rowNum++)
+                for (var rowNum = startRow; rowNum <= workSheetDetails.Dimension.End.Row; rowNum++)
                 {
                     var wsRow = workSheetDetails.Cells[rowNum, 2, rowNum, excelasTable.Columns.Count];
-                    DataRow row = excelasTable.Rows.Add();
+                    var row = excelasTable.Rows.Add();
                     foreach (var cell in wsRow)
                     {
                         row[cell.Start.Column-2] = cell.Text;

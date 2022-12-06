@@ -28,7 +28,7 @@ namespace FamilyExperience.Dataimport
         
         public async Task ProcessDataAsync()
         {
-            string orgId = "ca8ddaeb-b5e5-46c4-b94d-43a8e2ccc066";
+            var orgId = "ca8ddaeb-b5e5-46c4-b94d-43a8e2ccc066";
 
 
             try
@@ -62,7 +62,7 @@ namespace FamilyExperience.Dataimport
 
                     openReferralOrgRecord.AdministractiveDistrictCode = GetLongitudeLatitudeForPostcode(service.Postcode).AdministractiveDistrictCode;
 
-                    List<RegularSchedule> regularSchedules = new List<RegularSchedule>();
+                    var regularSchedules = new List<RegularSchedule>();
 
                     // Regular and Holiday schedule, Agerange needs to be implemented
 
@@ -149,7 +149,7 @@ namespace FamilyExperience.Dataimport
         }
 
         private Location GetLocations(Record service)        {
-            Location location = new Location();
+            var location = new Location();
             location.Id = Guid.NewGuid().ToString();
             location.Name = service.Name.Substring(0, service.Name.Length > 50 ? 50 : service.Name.Length);
             location.Description = service.Name.Substring(0, service.Name.Length > 50 ? 50 : service.Name.Length);
@@ -217,7 +217,7 @@ namespace FamilyExperience.Dataimport
 
         private List<PhysicalAddress> GetPhysicalAddress(Record service)
         {
-            List<PhysicalAddress> PhysicalAddresses = new List<PhysicalAddress>();
+            var PhysicalAddresses = new List<PhysicalAddress>();
 
             //CheckIfLocationExists(service.Postcode);
 
@@ -257,7 +257,7 @@ namespace FamilyExperience.Dataimport
             //Rootobject servicesList = new();
 
             using var response = await _client.GetAsync(new Uri("https://api.openobjects.com/v2/salfordfsd/records?key=633eb0a9e4b0b3bc6d117a9a&startIndex=3&count=4&query=api_channel:familyhubs"));
-            string apiResponse = await response.Content.ReadAsStringAsync();
+            var apiResponse = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Rootobject>(apiResponse);
 
 

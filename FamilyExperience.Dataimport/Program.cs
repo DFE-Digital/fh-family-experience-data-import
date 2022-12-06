@@ -14,7 +14,7 @@ namespace FamilyExperience.Dataimport
             //transformTHData.ProcessDataAsync().Wait();
 
 
-            TransformData transformData = new TransformData();
+            var transformData = new TransformData();
             transformData.ProcessDataAsync().Wait();
         }
            

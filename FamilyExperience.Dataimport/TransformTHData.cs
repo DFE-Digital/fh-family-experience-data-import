@@ -51,7 +51,7 @@ namespace FamilyExperience.Dataimport
             {
                 var orgid = "4faa3eb4-709b-4731-a5ed-dafaa6bf93c5";
                // var mapper = GetMapper();
-                THRoot ThRoot = new THRoot();
+                var ThRoot = new THRoot();
 
                 var mainTHServices = ExcelReader.ReadExcel(@"D:\DFE\TH\AP_MainSet.xlsx");
                 ThRoot.services = JsonConvert.DeserializeObject<List<THService>>(mainTHServices);
@@ -140,7 +140,7 @@ namespace FamilyExperience.Dataimport
         private static async Task<List<Taxonomy>> GetMasterTaxonomy()
         {
            var dfeTaxonomyMasterList = await _apiClient.GetAsync(new Uri(_apiClient.BaseAddress + $"api/taxonomies"));
-            string apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
+            var apiResponse = await dfeTaxonomyMasterList.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Taxonomy>>(apiResponse);
         }
 
@@ -306,7 +306,7 @@ namespace FamilyExperience.Dataimport
 
         private List<OpenReferralPhysicalAddressDto> GetPhysicalAddress(THService service)
         {
-            List<OpenReferralPhysicalAddressDto> PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
+            var PhysicalAddresses = new List<OpenReferralPhysicalAddressDto>();
 
             //CheckIfLocationExists(service.Postcode);
 
