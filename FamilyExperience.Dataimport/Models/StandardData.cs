@@ -4,7 +4,7 @@ namespace FamilyExperience.DataImport.Models
 {
     public class StandardData
     {
-        [JsonProperty("Local Authority")]
+        [JsonProperty("Local authority")]
         public string LAName { get; set; }
 
         [JsonProperty("Organisation type")]
@@ -13,10 +13,13 @@ namespace FamilyExperience.DataImport.Models
         [JsonProperty("Name of organisation")]
         public string OrganisationName { get; set; }
 
+        [JsonProperty("Service unique identifier")]
+        public string ServiceId { get; set; }
+
         [JsonProperty("Name of service")]
         public string ServiceName { get; set; }
 
-        [JsonProperty("Admin email for managing the service")]
+        [JsonProperty("Service administrator email")]
         public string Email { get; set; }
 
         [JsonProperty("Delivery method")]
@@ -27,9 +30,6 @@ namespace FamilyExperience.DataImport.Models
 
         [JsonProperty("Location description")]
         public string LocationDescription { get; set; }
-
-        [JsonProperty("Location type")]
-        public string LocationType { get; set; }
 
         [JsonProperty("Address line 1")]
         public string AddressLine1 { get; set; }
@@ -46,19 +46,19 @@ namespace FamilyExperience.DataImport.Models
         [JsonProperty("Postcode")]
         public string Postcode { get; set; }
 
-        [JsonProperty("Email to contact service")]
-        public string EmailToContactService { get; set; }
+        [JsonProperty("Contact email")]
+        public string ContactEmail { get; set; }
 
-        [JsonProperty("Phone number for people wanting to phone the service")]
-        public string PhoneToContactService { get; set; }
+        [JsonProperty("Contact phone")]
+        public string ContactPhone { get; set; }
 
         [JsonProperty("Website")]
         public string Website { get; set; }
 
-        [JsonProperty("Phone number for people wanting to text the service")]
+        [JsonProperty("Contact sms")]
         public string TextToContactService { get; set; }
 
-        [JsonProperty("Sub- Category")]
+        [JsonProperty("Sub-category")]
         public string Category { get; set; }
 
         [JsonProperty("Cost")]
@@ -69,6 +69,9 @@ namespace FamilyExperience.DataImport.Models
 
         [JsonProperty("Cost per")]
         public string CostPerUnit { get; set; }
+
+        [JsonProperty("Cost Description")]
+        public string CostDescription { get; set; }        
 
         [JsonProperty("Language")]
         public string Language { get; set; }
